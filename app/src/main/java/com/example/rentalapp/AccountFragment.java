@@ -61,9 +61,7 @@ public class AccountFragment extends Fragment {
         });
 
 
-
-
-        LogOut = v.findViewById(R.id.txtView_Renter_Logout);
+        LogOut = v.findViewById(R.id.txtView_Tenant_Logout);
         LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
