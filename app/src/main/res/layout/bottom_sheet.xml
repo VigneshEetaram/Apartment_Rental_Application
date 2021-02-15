@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/design_bottom_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="#C2C57F"
+            app:cardCornerRadius="8dp"
+            android:elevation="8dp"
+            android:layout_margin="4dp">
+
+        <View
+            android:layout_gravity="center_horizontal"
+            android:layout_width="30dp"
+            android:layout_height="5dp"
+            android:background="@color/cinnabar"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="70dp"
+            android:id="@+id/recyclerViewBottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+</androidx.cardview.widget.CardView>
+
+</LinearLayout>
