@@ -28,11 +28,94 @@ import com.google.firebase.firestore.Query;
 
 public class UserTenantFragment extends Fragment {
 
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private FirestoreRecyclerAdapter adapter;
+    FirebaseAuth fAuth;
+    FirebaseFirestore db;
+    String userID;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user_tenant, container, false);
-       return v;
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = v.findViewById(R.id.recyclerView8);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        Query query = firebaseFirestore.collection("Tenant");
+
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class)
+                .build();
+        adapter = new FirestoreRecyclerAdapter<User, ItemViewHolder>(options) {
+            @NonNull
+            @Override
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.renter_myad_recycler_view,parent,false);
+                return new ItemViewHolder(v);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull User model) {
+                holder.Name.setText(model.getFullname());
+                holder.ids.setText(model.getUserids());
+                holder.Email.setText(model.getEmails());
+                holder.Phone.setText(model.getPhonenumber());
+
+                holder.toolbar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+            }
+        };
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        recyclerView.setAdapter(adapter);
+
+        return v;
+    }
+
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        TextView Email;
+        TextView Name;
+        TextView Phone;
+        TextView ids;
+        String id;
+        Toolbar toolbar;
+
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Email = itemView.findViewById(R.id.txt_adminusersemail);
+            Name = itemView.findViewById(R.id.txt_adminusersname);
+            Phone = itemView.findViewById(R.id.txt_adminusersphone);
+            ids = itemView.findViewById(R.id.txt_adminusersid);
+            toolbar = itemView.findViewById(R.id.toolbar_adminusers);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
