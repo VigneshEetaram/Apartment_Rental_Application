@@ -38,8 +38,8 @@ public class AllAdsFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
-    FirebaseAuth fAuth;
-    FirebaseFirestore db;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
