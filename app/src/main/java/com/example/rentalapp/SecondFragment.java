@@ -167,6 +167,11 @@ public class SecondFragment extends Fragment {
     }
 
     private void OpenGallery() {
+        Intent gallery = new Intent();
+        gallery.setType("image/*");
+        gallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        gallery.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(gallery,"Select images"), gallerypic);
     }
 
 }
