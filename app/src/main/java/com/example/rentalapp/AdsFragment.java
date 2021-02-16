@@ -31,12 +31,147 @@ import com.squareup.picasso.Picasso;
 
 public class AdsFragment extends Fragment {
 
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private FirestoreRecyclerAdapter adapter;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore db;
+    private String userID;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ads, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = v.findViewById(R.id.recycler_view5);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Query query = firebaseFirestore.collection("Apartments");
+        FirestoreRecyclerOptions<Model> options = new FirestoreRecyclerOptions.Builder<Model>()
+                .setQuery(query,Model.class)
+                .build();
+        adapter = new FirestoreRecyclerAdapter<Model, ItemViewHolder>(options) {
+            @NonNull
+            @Override
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_recycler_view,parent,false);
+                return new ItemViewHolder(v);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
+                Picasso.get().load(model.getImage()).into(holder.Image);
+                holder.Name.setText(model.getName());
+                holder.Price.setText(model.getPrice());
+                holder.Description.setText(model.getDescription());
+                holder.Place.setText(model.getPlace());
+                String docid = model.getId();
+
+                holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if (id == R.id.edit){
+                            Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
+                            intent.putExtra("Id",model.getId());
+                            intent.putExtra("Image",model.getImage());
+                            intent.putExtra("Price",model.getPrice());
+                            intent.putExtra("Title",model.getName());
+                            intent.putExtra("Place",model.getPlace());
+                            intent.putExtra("Description",model.getDescription());
+                            startActivity(intent);
+                        }
+                        if (id == R.id.delete){
+
+                            DocumentReference eRef = db.collection("Myads").document(userID).collection("Selected").document(docid);
+                            eRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                            DocumentReference bRef = db.collection("Apartments").document(docid);
+                            bRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
+
+                        }
+                        return false;
+                    }
+                });
+                holder.Image.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ApartmentDetails.class);
+                        intent.putExtra("Id",model.getId());
+                        intent.putExtra("Image",model.getImage());
+                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Title",model.getName());
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("Description",model.getDescription());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        recyclerView.setAdapter(adapter);
         return  v;
+    }
+
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        TextView Price;
+        TextView Name;
+        TextView Description;
+        TextView Place;
+        ImageView Image;
+        String id;
+        Toolbar toolbar;
+
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Price = itemView.findViewById(R.id.txt_pricemyads);
+            Image = itemView.findViewById(R.id.Img_apartmentmyads);
+            Name = itemView.findViewById(R.id.txt_titlemyads);
+            Place = itemView.findViewById(R.id.txt_placemyads);
+            Description = itemView.findViewById(R.id.txt_descriptionmyads);
+            toolbar = itemView.findViewById(R.id.toolbar_myads);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

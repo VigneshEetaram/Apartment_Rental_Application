@@ -35,11 +35,95 @@ import java.util.List;
 
 public class AllAdsFragment extends Fragment {
 
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private FirestoreRecyclerAdapter adapter;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allads, container, false);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = view.findViewById(R.id.recyclerView);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        Query query = firebaseFirestore.collection("Apartments");
+
+        FirestoreRecyclerOptions<Model> options = new FirestoreRecyclerOptions.Builder<Model>()
+                .setQuery(query,Model.class)
+                .build();
+        adapter = new FirestoreRecyclerAdapter<Model, ItemViewHolder>(options) {
+            @NonNull
+            @Override
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerviewlist,parent,false);
+                return new ItemViewHolder(v);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
+                Picasso.get().load(model.getImage()).into(holder.Image);
+                holder.Name.setText(model.getName());
+                holder.Price.setText(model.getPrice());
+                holder.Description.setText(model.getDescription());
+                holder.Place.setText(model.getPlace());
+
+
+
+                holder.Image.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        Intent intent = new Intent(view.getContext(), ApartmentDetails.class);
+                        intent.putExtra("Image",model.getImage());
+                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Title",model.getName());
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("Description",model.getDescription());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        recyclerView.setAdapter(adapter);
+
         return view;
+    }
+
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        TextView Price;
+        TextView Name;
+        TextView Description;
+        TextView Place;
+        ImageView Image;
+        String id;
+
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Price = itemView.findViewById(R.id.txt_price);
+            Image = itemView.findViewById(R.id.Img_apartment);
+            Name = itemView.findViewById(R.id.txt_title);
+            Place = itemView.findViewById(R.id.txt_place);
+            Description = itemView.findViewById(R.id.txt_description);
+
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
