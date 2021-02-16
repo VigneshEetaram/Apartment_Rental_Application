@@ -87,10 +87,30 @@ public class SecondFragment extends Fragment {
                 OpenGallery();
             }
         });
+        btnSubmit = (Button) v.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aname = name.getText().toString().trim();
+                aprice = price.getText().toString().trim();
+                aplace = place.getText().toString().trim();
+                adescription = description.getText().toString().trim();
 
+                if(ImageUris == null){
+                    Toast.makeText(getContext(), "Image is mandatory.", Toast.LENGTH_SHORT).show();
+                    imageView.requestFocus();
+                }
+
+                uploadImage();
+
+            }
+        });
 
 
         return v;
+    }
+
+    private void uploadImage() {
     }
 
     private void OpenGallery() {
