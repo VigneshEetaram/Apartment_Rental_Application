@@ -71,6 +71,16 @@ public class SecondFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_second, container, false);
 
+        name = v.findViewById(R.id.edittxt_name);
+        price = v.findViewById(R.id.edittxt_price);
+        place = v.findViewById(R.id.edittxt_place);
+        description  = v.findViewById(R.id.edittxt_description);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        pd = new ProgressDialog(getContext());
+        imageView = (ImageView) v.findViewById(R.id.imgSelect);
+        ImageUris = new ArrayList<>();
+
 
 
         return v;
