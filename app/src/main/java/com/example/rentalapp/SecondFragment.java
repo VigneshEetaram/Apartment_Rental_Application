@@ -164,6 +164,27 @@ public class SecondFragment extends Fragment {
         }
 
     private void uploadData(String aname, String aprice, String aplace, String adescription) {
+        pd.setTitle("Adding data to firestore");
+        pd.show();
+
+        String id = UUID.randomUUID().toString();
+        Map<String, Object> doc = new HashMap<>();
+        doc.put("id", id);
+        doc.put("email", email);
+        doc.put("name", aname);
+        doc.put("price", aprice);
+        doc.put("place", aplace);
+        doc.put("description", adescription);
+        doc.put("image0", downloadimageurls[0]);
+        doc.put("image1", downloadimageurls[1]);
+        doc.put("image2", downloadimageurls[2]);
+        doc.put("image3", downloadimageurls[3]);
+        doc.put("image4", downloadimageurls[4]);
+        doc.put("image5", downloadimageurls[5]);
+        doc.put("image6", downloadimageurls[6]);
+        doc.put("image7", downloadimageurls[7]);
+        doc.put("image8", downloadimageurls[8]);
+        doc.put("image9", downloadimageurls[9]);
     }
 
     private void OpenGallery() {
