@@ -31,6 +31,13 @@ import com.squareup.picasso.Picasso;
 
 public class AdsFragment extends Fragment {
 
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private FirestoreRecyclerAdapter adapter;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore db;
+    private String userID;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
