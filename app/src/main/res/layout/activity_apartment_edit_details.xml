@@ -13,6 +13,13 @@
         android:layout_marginTop="80dp"
         android:padding="10dp">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#82C4B0"
+            app:cardCornerRadius="20dp"
+            app:cardMaxElevation="15dp"
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -22,6 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/ic_baseline_mode_edit_24"/>
 
             <ImageView
@@ -95,6 +104,7 @@
                 android:visibility="invisible"
                 />
         </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>
