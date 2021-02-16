@@ -46,7 +46,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class SecondFragment extends Fragment {
 
-    private EditText name,price,place,description;
+    private EditText name, price, place, description;
     private ImageView mImage;
     private Button btnSubmit;
     private String email;
@@ -57,10 +57,10 @@ public class SecondFragment extends Fragment {
     private ImageView imageView;
     private String userID;
     private ArrayList<Uri> ImageUris;
-    private String aname, aprice, aplace ,adescription;
+    private String aname, aprice, aplace, adescription;
     private static final int gallerypic = 1;
     private static final int PICK_IMAGES_CODE = 0;
-    private int position =0;
+    private int position = 0;
     private StorageReference AptImagesRef;
     private String[] downloadimageurls = new String[10];
     private String productRandomKey, saveCurrentDate, saveCurrentTime, downloadImageUrl;
@@ -74,7 +74,7 @@ public class SecondFragment extends Fragment {
         name = v.findViewById(R.id.edittxt_name);
         price = v.findViewById(R.id.edittxt_price);
         place = v.findViewById(R.id.edittxt_place);
-        description  = v.findViewById(R.id.edittxt_description);
+        description = v.findViewById(R.id.edittxt_description);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         pd = new ProgressDialog(getContext());
@@ -96,7 +96,7 @@ public class SecondFragment extends Fragment {
                 aplace = place.getText().toString().trim();
                 adescription = description.getText().toString().trim();
 
-                if(ImageUris == null){
+                if (ImageUris == null) {
                     Toast.makeText(getContext(), "Image is mandatory.", Toast.LENGTH_SHORT).show();
                     imageView.requestFocus();
                 }
@@ -120,7 +120,9 @@ public class SecondFragment extends Fragment {
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
-        for(int i = 0; i<ImageUris.size(); i++){   final StorageReference filePath = AptImagesRef.child(ImageUris.get(i).getLastPathSegment() + productRandomKey + ".jpg");
+        for (int i = 0; i < ImageUris.size(); i++) {
+
+            final StorageReference filePath = AptImagesRef.child(ImageUris.get(i).getLastPathSegment() + productRandomKey + ".jpg");
             final UploadTask uploadTask = filePath.putFile(ImageUris.get(i));
             int finalI = i;
             uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -137,19 +139,17 @@ public class SecondFragment extends Fragment {
                     Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
                         public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful())
-                            {
+                            if (!task.isSuccessful()) {
                                 throw task.getException();
                             }
 
-                            downloadimageurls[finalI]= filePath.getDownloadUrl().toString();
+                            downloadimageurls[finalI] = filePath.getDownloadUrl().toString();
                             return filePath.getDownloadUrl();
                         }
                     }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful())
-                            {
+                            if (task.isSuccessful()) {
                                 downloadimageurls[finalI] = task.getResult().toString();
 
                                 Toast.makeText(getContext(), "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
@@ -159,9 +159,19 @@ public class SecondFragment extends Fragment {
                         }
                     });
                 }
-            });}
-
+            });
         }
+
+
+    }
+
+    private void OpenGallery() {
+        Intent gallery = new Intent();
+        gallery.setType("image/*");
+        gallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        gallery.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(gallery, "Select images"), gallerypic);
+    }
 
     private void uploadData(String aname, String aprice, String aplace, String adescription) {
         pd.setTitle("Adding data to firestore");
@@ -185,6 +195,7 @@ public class SecondFragment extends Fragment {
         doc.put("image7", downloadimageurls[7]);
         doc.put("image8", downloadimageurls[8]);
         doc.put("image9", downloadimageurls[9]);
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db.collection("Myads").document(userID).collection("Selected").document(id).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -215,10 +226,11 @@ public class SecondFragment extends Fragment {
             }
         });
     }
+
     @Override
     public void onStart() {
         super.onStart();
-        if(FirebaseAuth.getInstance().getCurrentUser() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
             DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Users")
                     .document(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -237,19 +249,19 @@ public class SecondFragment extends Fragment {
 
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == gallerypic && resultCode == RESULT_OK){
-            if(data.getClipData()!=null){
+        if (requestCode == gallerypic && resultCode == RESULT_OK) {
+            if (data.getClipData() != null) {
                 int count = data.getClipData().getItemCount();
-                for(int i=0;i<count;i++){
+                for (int i = 0; i < count; i++) {
                     Uri imageuri = data.getClipData().getItemAt(i).getUri();
                     ImageUris.add(imageuri);
                 }
                 imageView.setImageURI(ImageUris.get(0));
-            }
-            else{
+            } else {
                 Uri imageuri = data.getData();
                 ImageUris.add(imageuri);
                 imageView.setImageURI(ImageUris.get(0));
@@ -258,14 +270,4 @@ public class SecondFragment extends Fragment {
 
         }
     }
-
-
-    private void OpenGallery() {
-        Intent gallery = new Intent();
-        gallery.setType("image/*");
-        gallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        gallery.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(gallery,"Select images"), gallerypic);
-    }
-
 }
