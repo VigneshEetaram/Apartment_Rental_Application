@@ -80,10 +80,20 @@ public class SecondFragment extends Fragment {
         pd = new ProgressDialog(getContext());
         imageView = (ImageView) v.findViewById(R.id.imgSelect);
         ImageUris = new ArrayList<>();
+        AptImagesRef = FirebaseStorage.getInstance().getReference().child("Apartment Images");
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenGallery();
+            }
+        });
 
 
 
         return v;
+    }
+
+    private void OpenGallery() {
     }
 
 }
