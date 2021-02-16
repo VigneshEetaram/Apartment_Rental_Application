@@ -120,9 +120,51 @@ public class SecondFragment extends Fragment {
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
-        for(int i = 0; i<ImageUris.size(); i++){}
+        for(int i = 0; i<ImageUris.size(); i++){   final StorageReference filePath = AptImagesRef.child(ImageUris.get(i).getLastPathSegment() + productRandomKey + ".jpg");
+            final UploadTask uploadTask = filePath.putFile(ImageUris.get(i));
+            int finalI = i;
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    String message = e.toString();
+                    Toast.makeText(getContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getContext(), "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
+
+                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful())
+                            {
+                                throw task.getException();
+                            }
+
+                            downloadimageurls[finalI]= filePath.getDownloadUrl().toString();
+                            return filePath.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful())
+                            {
+                                downloadimageurls[finalI] = task.getResult().toString();
+
+                                Toast.makeText(getContext(), "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
+                                uploadData(aname, aprice, aplace, adescription);
+
+                            }
+                        }
+                    });
+                }
+            });}
 
         }
+
+    private void uploadData(String aname, String aprice, String aplace, String adescription) {
+    }
 
     private void OpenGallery() {
     }
