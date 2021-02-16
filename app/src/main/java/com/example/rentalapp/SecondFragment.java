@@ -46,7 +46,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class SecondFragment extends Fragment {
 
-    EditText name,price,place,description;
+    private EditText name,price,place,description;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
