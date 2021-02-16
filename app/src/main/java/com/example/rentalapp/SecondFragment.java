@@ -185,6 +185,20 @@ public class SecondFragment extends Fragment {
         doc.put("image7", downloadimageurls[7]);
         doc.put("image8", downloadimageurls[8]);
         doc.put("image9", downloadimageurls[9]);
+        db.collection("Myads").document(userID).collection("Selected").document(id).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                pd.dismiss();
+                Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void OpenGallery() {
