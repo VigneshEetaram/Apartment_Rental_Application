@@ -119,7 +119,10 @@ public class SecondFragment extends Fragment {
         saveCurrentTime = currentTime.format(calendar.getTime());
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
-    }
+
+        for(int i = 0; i<ImageUris.size(); i++){}
+
+        }
 
     private void OpenGallery() {
     }
