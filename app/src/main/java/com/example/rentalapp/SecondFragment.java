@@ -47,6 +47,23 @@ import static android.app.Activity.RESULT_OK;
 public class SecondFragment extends Fragment {
 
     private EditText name,price,place,description;
+    ImageView mImage;
+    Button btnSubmit;
+    String email;
+    ProgressDialog pd;
+    FirebaseAuth fAuth;
+    FirebaseFirestore db;
+    private Uri imageUri;
+    ImageView imageView;
+    String userID;
+    private ArrayList<Uri> ImageUris;
+    String aname, aprice, aplace ,adescription;
+    private static final int gallerypic = 1;
+    private static final int PICK_IMAGES_CODE = 0;
+    int position =0;
+    private StorageReference AptImagesRef;
+    private String[] downloadimageurls = new String[10];
+    private String productRandomKey, saveCurrentDate, saveCurrentTime, downloadImageUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
