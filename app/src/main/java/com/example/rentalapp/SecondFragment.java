@@ -237,6 +237,28 @@ public class SecondFragment extends Fragment {
 
         }
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == gallerypic && resultCode == RESULT_OK){
+            if(data.getClipData()!=null){
+                int count = data.getClipData().getItemCount();
+                for(int i=0;i<count;i++){
+                    Uri imageuri = data.getClipData().getItemAt(i).getUri();
+                    ImageUris.add(imageuri);
+                }
+                imageView.setImageURI(ImageUris.get(0));
+            }
+            else{
+                Uri imageuri = data.getData();
+                ImageUris.add(imageuri);
+                imageView.setImageURI(ImageUris.get(0));
+
+            }
+
+        }
+    }
+
 
     private void OpenGallery() {
         Intent gallery = new Intent();
