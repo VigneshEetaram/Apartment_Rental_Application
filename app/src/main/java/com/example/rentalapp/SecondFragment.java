@@ -199,6 +199,21 @@ public class SecondFragment extends Fragment {
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        db.collection("Apartments").document(id).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                pd.dismiss();
+                Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                pd.dismiss();
+                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void OpenGallery() {
