@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -27,10 +29,12 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText lEmail, lPassword;
-    TextView lForgotPassword;
+    TextView lForgotPassword, English,French;
     FirebaseFirestore lStore;
     FirebaseAuth lAuth,mAuth;
     Button lLogin,lRegister, lAdminLogin;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadlocale();
         setContentView(R.layout.activity_main);
 
         lEmail = findViewById(R.id.editTxt_Email);
@@ -48,11 +53,28 @@ public class MainActivity extends AppCompatActivity {
         lLogin = findViewById(R.id.btn_login);
         lRegister = findViewById(R.id.btn_register);
         lForgotPassword = findViewById(R.id.txt_ForgotPassword);
-
+        English = findViewById(R.id.txt_english);
+        French = findViewById(R.id.txt_french);
         lStore = FirebaseFirestore.getInstance();
         lAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        English.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                translate("en");
+                recreate();
+            }
+        });
+
+        French.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                translate("fr");
+                recreate();
+
+            }
+        });
 
         /**
          * take back to register page
@@ -205,5 +227,24 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+    }
+    private void translate(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang",lang);
+        editor.apply();
+
+    }
+
+    private void loadlocale(){
+
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        String language = prefs.getString("My_Lang","");
+        translate(language);
     }
 }
