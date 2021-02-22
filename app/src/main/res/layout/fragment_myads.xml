@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#d4dcf2"
     tools:context=".tenantfragments.MyadsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
