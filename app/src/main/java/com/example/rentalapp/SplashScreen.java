@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,11 +20,24 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class SplashScreen extends AppCompatActivity {
     private FirebaseAuth mAuth;
     FirebaseFirestore lStore;
+    Animation topAnim, bottomAnim;
+    ImageView image;
+    TextView title, slogan;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+
+        image=findViewById(R.id.splashlogo);
+        title=findViewById(R.id.title);
+
+        image.setAnimation(topAnim);
+        title.setAnimation(bottomAnim);
 
         Thread myThread = new Thread(){
             @Override

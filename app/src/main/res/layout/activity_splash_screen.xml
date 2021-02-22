@@ -20,6 +20,7 @@
         app:srcCompat="@drawable/splash_logo" />
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/aclonica"
