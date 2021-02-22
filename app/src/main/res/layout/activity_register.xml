@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical"
-    android:background="#FBA238">
+    android:background="#d4dcf2">
 
     <ImageView
         android:layout_width="170dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:background="@drawable/logo"/>
+        android:background="@drawable/splash_logo"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -32,11 +32,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "REGISTER"
-                android:layout_marginTop="1dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="1dp"
+                android:fontFamily="@font/audiowide"
+                android:text="REGISTER"
+                android:textColor="#3a5ebf"
                 android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
     <EditText
         android:id="@+id/register_name"
@@ -137,27 +139,29 @@
             android:textSize="22dp" />
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/register_BTN"
-        android:layout_gravity="center"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:text="Register"
-        android:background="@drawable/input_design2"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="282dp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/register_BTN"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/input_design2"
+                android:text="Register"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="103dp"
+                tools:layout_editor_absoluteY="282dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_BTN"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/input_design2"
-        android:text="login"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="282dp"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_BTN"
+                android:layout_width="310dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/input_design2"
+                android:text="login"
+                android:textColor="@color/white"
+                tools:layout_editor_absoluteX="103dp"
+                tools:layout_editor_absoluteY="282dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

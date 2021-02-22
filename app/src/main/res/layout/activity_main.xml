@@ -7,13 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#FBA238">
+    android:background="#d4dcf2">
 
     <ImageView
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:background="@drawable/logo"/>
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+
+        android:background="@drawable/splash_logo" />
 
 <androidx.cardview.widget.CardView
     android:layout_gravity="center"
@@ -31,73 +35,77 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "LOGIN"
-            android:layout_marginTop="10dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/audiowide"
+            android:text="LOGIN"
+            android:textColor="#3a5ebf"
             android:textSize="28sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editTxt_Email"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/input_design"
-        android:drawableStart="@drawable/ic_baseline_email_24"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp" />
+        <EditText
+            android:id="@+id/editTxt_Email"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/input_design"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawablePadding="12dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textPersonName"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
 
-    <EditText
-        android:id="@+id/editTxt_Password"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input_design"
-        android:drawableStart="@drawable/ic_baseline_lock_24"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp" />
+        <EditText
+            android:id="@+id/editTxt_Password"
+            android:layout_width="310dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_design"
+            android:drawableStart="@drawable/ic_baseline_lock_24"
+            android:drawablePadding="12dp"
+            android:ems="10"
+            android:hint="password"
+            android:inputType="textPassword"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_login"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/input_design2"
-        android:text="login"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="282dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/input_design2"
+            android:text="login"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="103dp"
+            tools:layout_editor_absoluteY="282dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_register"
-        android:layout_gravity="center"
-        android:layout_width="310dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:text="Register"
-        android:background="@drawable/input_design2"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="282dp" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/input_design2"
+            android:text="Register"
+            android:textColor="@color/white"
+            tools:layout_editor_absoluteX="103dp"
+            tools:layout_editor_absoluteY="282dp" />
 
-    <TextView
-        android:id="@+id/txt_ForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:textStyle="bold"
-        android:text="Forgot password?" />
+        <TextView
+            android:id="@+id/txt_ForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Forgot password?"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
 

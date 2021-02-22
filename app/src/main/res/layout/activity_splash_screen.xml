@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F6B551"
+    android:background="#3a5ebf"
     tools:context=".SplashScreen">
 
 
     <ImageView
         android:id="@+id/splashlogo"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="96dp"
+        android:layout_width="410dp"
+        android:layout_height="410dp"
+        android:layout_marginTop="132dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/splash_logo" />
