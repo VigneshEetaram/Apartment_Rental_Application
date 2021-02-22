@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#d4dcf2"
+    android:background="@drawable/app_background"
     android:foregroundTint="#82C4B0">
 
     <androidx.cardview.widget.CardView
@@ -11,7 +11,7 @@
         android:padding="5dp"
         app:cardCornerRadius="20dp"
         android:elevation="8dp"
-        android:backgroundTint="#82C4B0"
+        android:backgroundTint="#d4dcf2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -19,7 +19,7 @@
         android:id="@+id/cardView"
         android:elevation="8dp"
         app:cardCornerRadius="20dp"
-        android:backgroundTint="#82C4B0"
+        android:backgroundTint="#d4dcf2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp">

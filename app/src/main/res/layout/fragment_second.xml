@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#d4dcf2"
+    android:background="@drawable/app_background"
     tools:context=".SecondFragment">
 
     <ScrollView
@@ -15,7 +15,7 @@
             android:layout_height="950dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            android:backgroundTint="#82C4B0"
+            android:backgroundTint="#d4dcf2"
             app:cardMaxElevation="8dp"
             app:cardCornerRadius="15dp">
 

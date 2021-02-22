@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d4dcf2"
+    android:background="@drawable/app_background"
     tools:context=".SendAnnouncements"
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="25dp"
-        android:backgroundTint="#82C4B0"
+        android:backgroundTint="#d4dcf2"
         android:elevation="15dp"
         app:cardElevation="10dp"
         android:layout_marginTop="75dp"

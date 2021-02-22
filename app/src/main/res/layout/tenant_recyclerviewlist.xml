@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:backgroundTint="#82C4B0"
+        android:backgroundTint="#d4dcf2"
         app:cardCornerRadius="10dp"
         android:elevation="8dp"
         android:layout_margin="4dp">

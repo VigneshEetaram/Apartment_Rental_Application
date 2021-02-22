@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AccountFragment"
-    android:background="#3a5ebf"
+    android:background="@drawable/app_background"
     android:orientation="vertical">
 
     <ScrollView

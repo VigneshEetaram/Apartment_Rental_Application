@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#d4dcf2"
+    android:background="@drawable/app_background"
     tools:context=".ApartmentDetails">
 
     <androidx.core.widget.NestedScrollView
@@ -17,7 +17,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundTint="#82C4B0"
+            android:backgroundTint="#d4dcf2"
             app:cardCornerRadius="20dp"
             app:cardMaxElevation="15dp"
             >

@@ -7,17 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#d4dcf2">
+    android:background="@drawable/app_background">
 
     <ImageView
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/splash_logo"
         android:cropToPadding="false"
-        android:scaleType="fitXY"
 
-        android:background="@drawable/splash_logo" />
+        android:scaleType="fitXY" />
 
 <androidx.cardview.widget.CardView
     android:layout_gravity="center"
@@ -25,12 +26,15 @@
     app:cardCornerRadius="15dp"
     android:elevation="10dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:orientation="vertical">
+
+        android:orientation="vertical"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/audiowide"
             android:text="LOGIN"
-            android:textColor="#3a5ebf"
+            android:textColor="@color/navyBlueDark"
             android:textSize="28sp"
             android:textStyle="bold" />
 
