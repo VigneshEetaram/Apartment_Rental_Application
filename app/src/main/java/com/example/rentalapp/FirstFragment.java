@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -23,26 +24,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.rentalapp.tenantfragments.MyadsFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class FirstFragment extends Fragment {
-
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     String userID;
+    List<SlideModel> slideModels = new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +62,7 @@ public class FirstFragment extends Fragment {
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         Query query = firebaseFirestore.collection("Myads").document(userID).collection("Selected");
 
         FirestoreRecyclerOptions<Model> options = new FirestoreRecyclerOptions.Builder<Model>()
@@ -65,14 +75,44 @@ public class FirstFragment extends Fragment {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.renter_myad_recycler_view,parent,false);
                 return new ItemViewHolder(v);
             }
+
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
-                Picasso.get().load(model.getImage()).into(holder.Image);
-                holder.Name.setText(model.getName());
+
+
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
+                        document(model.getDocumentid());
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        int count = Integer.valueOf(documentSnapshot.getString("count"));
+                        for (int i=0; i<count;i++){
+                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
+                        }
+
+                        holder.Image.setImageList(slideModels,true);
+                    }
+                });
+
+                holder.Name.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
-                String docid = model.getId();
+                String docid = model.getDocumentid();
+
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
+                        intent.putExtra("Id",model.getDocumentid());
+                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Title",model.getStreetname());
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("Description",model.getDescription());
+                        startActivity(intent);
+                    }
+                });
 
                 holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -80,10 +120,9 @@ public class FirstFragment extends Fragment {
                         int id = item.getItemId();
                         if (id == R.id.edit){
                             Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
-                            intent.putExtra("Id",model.getId());
-                            intent.putExtra("Image",model.getImage());
+                            intent.putExtra("Id",model.getDocumentid());
                             intent.putExtra("Price",model.getPrice());
-                            intent.putExtra("Title",model.getName());
+                            intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
                             startActivity(intent);
@@ -122,18 +161,7 @@ public class FirstFragment extends Fragment {
                         return false;
                     }
                 });
-                holder.Image.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
-                        intent.putExtra("Id",model.getId());
-                        intent.putExtra("Image",model.getImage());
-                        intent.putExtra("Price",model.getPrice());
-                        intent.putExtra("Title",model.getName());
-                        intent.putExtra("Place",model.getPlace());
-                        intent.putExtra("Description",model.getDescription());
-                        startActivity(intent);
-                    }
-                });
+
 
             }
         };
@@ -151,18 +179,20 @@ public class FirstFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        ImageView Image;
+        ImageSlider Image;
         String id;
         Toolbar toolbar;
+        CardView cardView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             Price = itemView.findViewById(R.id.txt_pricemyads);
-            Image = itemView.findViewById(R.id.Img_apartmentmyads);
+            Image = itemView.findViewById(R.id.Img_renter_apartment);
             Name = itemView.findViewById(R.id.txt_titlemyads);
             Place = itemView.findViewById(R.id.txt_placemyads);
             Description = itemView.findViewById(R.id.txt_descriptionmyads);
             toolbar = itemView.findViewById(R.id.toolbar_myads);
+            cardView = itemView.findViewById(R.id.cardview_renter_myad);
         }
     }
 
@@ -177,5 +207,4 @@ public class FirstFragment extends Fragment {
         super.onStop();
         adapter.stopListening();
     }
-
 }

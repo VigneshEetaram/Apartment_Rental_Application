@@ -3,6 +3,7 @@ package com.example.rentalapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -53,17 +55,28 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        DocumentReference docRef = db.collection("Users").document(userID);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+
+        DocumentReference docRef1 = db.collection("Tenant").document(userID);
+        docRef1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
+                if(documentSnapshot.exists()){
+                    User user = documentSnapshot.toObject(User.class);
 
-                firstName.setText(user.getFullname());
-                email.setText(user.getEmails());
-                phoneNumber.setText(user.getPhonenumber());
+                    firstName.setText(user.getFirstname());
+                    lastName.setText(user.getSecondname());
+                    email.setText(user.getEmail());
+                    phoneNumber.setText(user.getPhonenumber());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
+
 
 
         LogOut = v.findViewById(R.id.txtView_Tenant_Logout);
@@ -93,13 +106,14 @@ public class AccountFragment extends Fragment {
             public void onClick(View v) {
 
 
-                db.collection("Users").document(userID)
+                db.collection("Tenant").document(userID)
                         .update(
                                 "firstname", firstName.getText().toString(),
-                                "lastname", lastName.getText().toString(),
+                                "secondname", lastName.getText().toString(),
                                 "email", email.getText().toString(),
-                                "phoneNumber", phoneNumber.getText().toString()
+                                "phonenumber", phoneNumber.getText().toString()
                         );
+
 
                 firstName.setEnabled(false);
                 lastName.setEnabled(false);

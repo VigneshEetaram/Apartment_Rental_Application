@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,15 +57,24 @@ public class FourthFragment extends Fragment {
             }
         });
 
-        DocumentReference docRef = db.collection("Users").document(userID);
+
+        DocumentReference docRef = db.collection("Renter").document(userID);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
+                if(documentSnapshot.exists()){
+                    User user = documentSnapshot.toObject(User.class);
 
-                firstName.setText(user.getFullname());
-                email.setText(user.getEmails());
-                phoneNumber.setText(user.getPhonenumber());
+                    firstName.setText(user.getFirstname());
+                    lastName.setText(user.getSecondname());
+                    email.setText(user.getEmail());
+                    phoneNumber.setText(user.getPhonenumber());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
 
@@ -98,12 +108,12 @@ public class FourthFragment extends Fragment {
             public void onClick(View v) {
 
 
-                db.collection("Users").document(userID)
+                db.collection("Renter").document(userID)
                         .update(
                                 "firstname", firstName.getText().toString(),
-                                "lastname", lastName.getText().toString(),
+                                "secondname", lastName.getText().toString(),
                                 "email", email.getText().toString(),
-                                "phoneNumber", phoneNumber.getText().toString()
+                                "phonenumber", phoneNumber.getText().toString()
                         );
 
                 firstName.setEnabled(false);

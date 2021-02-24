@@ -19,6 +19,7 @@ import com.example.rentalapp.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +28,6 @@ import com.google.firebase.firestore.Query;
 
 
 public class UserTenantFragment extends Fragment {
-
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
@@ -55,27 +55,30 @@ public class UserTenantFragment extends Fragment {
             @NonNull
             @Override
             public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.renter_myad_recycler_view,parent,false);
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tenantrenterrecyclerview,parent,false);
                 return new ItemViewHolder(v);
             }
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull User model) {
-                holder.Name.setText(model.getFullname());
-                holder.ids.setText(model.getUserids());
-                holder.Email.setText(model.getEmails());
-                holder.Phone.setText(model.getPhonenumber());
+                holder.fName.setText("First Name: " + model.getFirstname());
+                holder.sName.setText("Last Name: " + model.getSecondname());
+                holder.ids.setText("Id: " + model.getUserid());
+                holder.Email.setText("Email: " + model.getEmail());
+                holder.Phone.setText("Phone: " + model.getPhonenumber());
 
                 holder.toolbar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        String id = model.getUserid();
+                        db.collection("Tenant").document(model.getUserid())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
                 });
             }
@@ -90,8 +93,9 @@ public class UserTenantFragment extends Fragment {
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
+
         TextView Email;
-        TextView Name;
+        TextView fName, sName;
         TextView Phone;
         TextView ids;
         String id;
@@ -100,7 +104,8 @@ public class UserTenantFragment extends Fragment {
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             Email = itemView.findViewById(R.id.txt_adminusersemail);
-            Name = itemView.findViewById(R.id.txt_adminusersname);
+            fName = itemView.findViewById(R.id.txt_adminusersfname);
+            sName = itemView.findViewById(R.id.txt_adminuserssname);
             Phone = itemView.findViewById(R.id.txt_adminusersphone);
             ids = itemView.findViewById(R.id.txt_adminusersid);
             toolbar = itemView.findViewById(R.id.toolbar_adminusers);

@@ -1,33 +1,26 @@
 package com.example.rentalapp;
 
 public class User {
-    public String fullname,emails,phonenumber,userids;
+    public String firstname,secondname,phonenumber,userid,email;
 
     public User() {
 
     }
 
-    public User(String fullname, String emails, String phonenumber, String userids) {
-        this.fullname = fullname;
-        this.emails = emails;
-        this.phonenumber = phonenumber;
-        this.userids = userids;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getFullname() {
-        return fullname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public String getSecondname() {
+        return secondname;
     }
 
-    public String getEmails() {
-        return emails;
-    }
-
-    public void setEmails(String emails) {
-        this.emails = emails;
+    public void setSecondname(String secondname) {
+        this.secondname = secondname;
     }
 
     public String getPhonenumber() {
@@ -38,11 +31,19 @@ public class User {
         this.phonenumber = phonenumber;
     }
 
-    public String getUserids() {
-        return userids;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setUserids(String userids) {
-        this.userids = userids;
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

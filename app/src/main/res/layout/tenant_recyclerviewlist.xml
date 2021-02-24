@@ -11,6 +11,7 @@
         android:elevation="8dp"
         android:layout_margin="4dp">
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_tenant_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"

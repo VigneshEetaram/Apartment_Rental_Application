@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
     EditText lEmail, lPassword;
     TextView lForgotPassword, English,French;
     FirebaseFirestore lStore;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         lAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+
         English.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
-                finish();;
+                finish();
+
             }
         });
 
@@ -104,32 +107,7 @@ public class MainActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                    DocumentReference docRef = db.collection("Users").document(user.getUid());
-                                    docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            if (value.exists()) {
-                                                //update
-                                                Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                                                checkAccessLevel(authResult.getUser().getUid());
-                                            } else {
-                                                //Insert
-                                                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                                user.delete()
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    Toast.makeText(MainActivity.this, "fail login", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        }
-                                    });
-
-
+                                    checkAccessLevel(authResult.getUser().getUid());
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -149,31 +127,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void translate(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang",lang);
+        editor.apply();
+
+    }
+
+    private void loadlocale(){
+
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        String language = prefs.getString("My_Lang","");
+        translate(language);
+    }
+
     /**
      * Checking access levels for users
      * @param uid String
      */
 
     private void checkAccessLevel(String uid) {
-        DocumentReference documentReference = lStore.collection("Users").document(uid);
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Renter").
+                document(uid);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d("TAG","onSuccess" + documentSnapshot.getData());
-                if (documentSnapshot.getString("isUser").equals("0")){
-                    startActivity(new Intent(getApplicationContext(),AdminHomePage.class));
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
+                    startActivity(new Intent(getApplicationContext(),RenterHomePage.class));
                     finish();
                 }
-                if (documentSnapshot.getString("isUser").equals("1")){
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
+                document(uid);
+        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
                     startActivity(new Intent(getApplicationContext(),TenantHomePage.class));
                     finish();
                 }
-                if(documentSnapshot.getString("isUser").equals("2")){
-                    Intent intent = new Intent(getApplicationContext(),RenterHomePage.class);
-                    startActivity(intent);
-                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
             }
         });
+        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
+        finish();
+
     }
 
 
@@ -200,51 +216,65 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onStart() {
+
         super.onStart();
+
         if(FirebaseAuth.getInstance().getCurrentUser() != null){
 
-            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Users").
+            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Renter").
                     document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                    if (documentSnapshot.getString("isUser").equals("0")){
-                        startActivity(new Intent(getApplicationContext(),AdminHomePage.class));
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.getResult().exists()){
+                        startActivity(new Intent(getApplicationContext(),RenterHomePage.class));
                         finish();
                     }
-                    if (documentSnapshot.getString("isUser").equals("1")){
-                        startActivity(new Intent(getApplicationContext(),TenantHomePage.class));
-                        finish();
-                    }
-                    if(documentSnapshot.getString("isUser").equals("2")){
-                        Intent intent = new Intent(getApplicationContext(),RenterHomePage.class);
-                        startActivity(intent);
-                    }
-
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
 
                 }
             });
 
+            DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
+                    document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.getResult().exists()){
+                        startActivity(new Intent(getApplicationContext(),TenantHomePage.class));
+                        finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+            DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
+                    document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.getResult().exists()){
+                        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
+                        finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+
+
         }
     }
-    private void translate(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-        Configuration configuration = new Configuration();
-        configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
 
-        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
-        editor.putString("My_Lang",lang);
-        editor.apply();
-
-    }
-
-    private void loadlocale(){
-
-        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
-        String language = prefs.getString("My_Lang","");
-        translate(language);
-    }
 }

@@ -29,11 +29,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/Img_apartment"
-                android:layout_width="400dp"
+                android:layout_width="378dp"
                 android:layout_height="200dp"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                app:auto_cycle="false"
+                app:delay="0"
+                app:period="1000"
+                app:corner_radius="5"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

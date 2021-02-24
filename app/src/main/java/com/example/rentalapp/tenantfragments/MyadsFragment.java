@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.rentalapp.ApartmentDetails;
 import com.example.rentalapp.ApartmentEditDetails;
@@ -27,10 +26,12 @@ import com.example.rentalapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -48,7 +49,7 @@ public class MyadsFragment extends Fragment {
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     String userID;
-
+    List<SlideModel> slideModels = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,12 +79,25 @@ public class MyadsFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
-                Picasso.get().load(model.getImage()).into(holder.Image);
-                holder.Name.setText(model.getName());
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
+                        document(model.getDocumentid());
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        int count = Integer.valueOf(documentSnapshot.getString("count"));
+                        for (int i=0; i<count;i++){
+                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
+                        }
+
+                        holder.Image.setImageList(slideModels,true);
+                    }
+                });
+                holder.Name.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
-                String docid = model.getId();
+                String docid = model.getDocumentid();
 
                 holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -91,9 +105,9 @@ public class MyadsFragment extends Fragment {
                         int id = item.getItemId();
                         if (id == R.id.edit){
                             Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
-                            intent.putExtra("Id",model.getId());
+                            intent.putExtra("Id",model.getDocumentid());
                             intent.putExtra("Price",model.getPrice());
-                            intent.putExtra("Title",model.getName());
+                            intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
                             startActivity(intent);
@@ -135,11 +149,10 @@ public class MyadsFragment extends Fragment {
                 holder.Image.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
-                        intent.putExtra("Id",model.getId());
+                        intent.putExtra("Id",model.getDocumentid());
                         intent.putExtra("Price",model.getPrice());
-                        intent.putExtra("Title",model.getName());
+                        intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
-                        intent.putExtra("Image",model.getImage());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
                     }
@@ -161,10 +174,9 @@ public class MyadsFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        ImageView Image;
+        ImageSlider Image;
         String id;
         Toolbar toolbar;
-        ImageSlider imageSlider;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -173,7 +185,7 @@ public class MyadsFragment extends Fragment {
             Place = itemView.findViewById(R.id.txt_placemyads);
             Description = itemView.findViewById(R.id.txt_descriptionmyads);
             toolbar = itemView.findViewById(R.id.toolbar_myads);
-            Image = itemView.findViewById(R.id.Img_apartmentmyads);
+            Image = itemView.findViewById(R.id.Img_renter_apartment);
         }
     }
 

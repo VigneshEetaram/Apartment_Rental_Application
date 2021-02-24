@@ -30,21 +30,18 @@ import com.squareup.picasso.Picasso;
 
 
 public class AdsFragment extends Fragment {
-
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore db;
-    private String userID;
-
+    FirebaseAuth fAuth;
+    FirebaseFirestore db;
+    String userID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ads, container, false);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.recycler_view5);
         fAuth = FirebaseAuth.getInstance();
@@ -65,12 +62,11 @@ public class AdsFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
-                Picasso.get().load(model.getImage()).into(holder.Image);
-                holder.Name.setText(model.getName());
+                holder.Name.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
-                String docid = model.getId();
+                String docid = model.getDocumentid();
 
                 holder.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                     @Override
@@ -78,10 +74,9 @@ public class AdsFragment extends Fragment {
                         int id = item.getItemId();
                         if (id == R.id.edit){
                             Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
-                            intent.putExtra("Id",model.getId());
-                            intent.putExtra("Image",model.getImage());
+                            intent.putExtra("Id",model.getDocumentid());
                             intent.putExtra("Price",model.getPrice());
-                            intent.putExtra("Title",model.getName());
+                            intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
                             startActivity(intent);
@@ -123,10 +118,9 @@ public class AdsFragment extends Fragment {
                 holder.Image.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ApartmentDetails.class);
-                        intent.putExtra("Id",model.getId());
-                        intent.putExtra("Image",model.getImage());
+                        intent.putExtra("Id",model.getDocumentid());
                         intent.putExtra("Price",model.getPrice());
-                        intent.putExtra("Title",model.getName());
+                        intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
@@ -139,7 +133,8 @@ public class AdsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
         recyclerView.setAdapter(adapter);
-        return  v;
+
+        return v;
     }
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {

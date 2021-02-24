@@ -56,7 +56,7 @@ public class UserRenterFragment extends Fragment {
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-        Query query = firebaseFirestore.collection("Users");
+        Query query = firebaseFirestore.collection("Renter");
 
         FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
                 .setQuery(query, User.class)
@@ -71,16 +71,17 @@ public class UserRenterFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull User model) {
-                holder.Name.setText("Name: " + model.getFullname());
-                holder.ids.setText("Id: " + model.getUserids());
-                holder.Email.setText("Email: " + model.getEmails());
+                holder.fName.setText("First Name: " + model.getFirstname());
+                holder.sName.setText("Last Name: " + model.getSecondname());
+                holder.ids.setText("Id: " + model.getUserid());
+                holder.Email.setText("Email: " + model.getEmail());
                 holder.Phone.setText("Phone: " + model.getPhonenumber());
 
                 holder.toolbar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String id = model.getUserids();
-                        db.collection("Users").document(model.getUserids())
+                        String id = model.getUserid();
+                        db.collection("Renter").document(model.getUserid())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -103,7 +104,7 @@ public class UserRenterFragment extends Fragment {
     static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView Email;
-        TextView Name;
+        TextView fName, sName;
         TextView Phone;
         TextView ids;
         String id;
@@ -112,7 +113,8 @@ public class UserRenterFragment extends Fragment {
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             Email = itemView.findViewById(R.id.txt_adminusersemail);
-            Name = itemView.findViewById(R.id.txt_adminusersname);
+            fName = itemView.findViewById(R.id.txt_adminusersfname);
+            sName = itemView.findViewById(R.id.txt_adminuserssname);
             Phone = itemView.findViewById(R.id.txt_adminusersphone);
             ids = itemView.findViewById(R.id.txt_adminusersid);
             toolbar = itemView.findViewById(R.id.toolbar_adminusers);

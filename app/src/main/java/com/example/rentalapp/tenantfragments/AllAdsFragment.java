@@ -14,15 +14,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.rentalapp.ApartmentDetails;
 import com.example.rentalapp.Model;
 import com.example.rentalapp.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,18 +39,17 @@ import java.util.List;
 
 
 public class AllAdsFragment extends Fragment {
-
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
-    private FirebaseAuth fAuth;
-    private FirebaseFirestore db;
+    FirebaseAuth fAuth;
+    FirebaseFirestore db;
+    List<SlideModel> slideModels = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_allads, container, false);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.recyclerView);
         fAuth = FirebaseAuth.getInstance();
@@ -65,8 +69,22 @@ public class AllAdsFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
-                Picasso.get().load(model.getImage()).into(holder.Image);
-                holder.Name.setText(model.getName());
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
+                        document(model.getDocumentid());
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        int count = Integer.valueOf(documentSnapshot.getString("count"));
+                        for (int i=0; i<count;i++){
+                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
+                        }
+
+                        holder.Image.setImageList(slideModels,true);
+                    }
+                });
+
+                holder.Name.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
@@ -76,9 +94,8 @@ public class AllAdsFragment extends Fragment {
                 holder.Image.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), ApartmentDetails.class);
-                        intent.putExtra("Image",model.getImage());
                         intent.putExtra("Price",model.getPrice());
-                        intent.putExtra("Title",model.getName());
+                        intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
@@ -101,7 +118,7 @@ public class AllAdsFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        ImageView Image;
+        ImageSlider Image;
         String id;
 
         public ItemViewHolder(@NonNull View itemView) {
