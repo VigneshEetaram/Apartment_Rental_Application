@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.icu.text.CaseMap;
 import android.os.Bundle;
+import android.util.EventLogTags;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -139,6 +141,42 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
     }
+
+    private void translator(){
+
+        String image;
+        String title;
+        String price;
+        String description;
+        String id1 ;
+        int id = 1 ;
+
+        String place;
+        String email;
+        String renterid;
+
+
+        if(id == 1) {
+            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
+            finish();
+        }
+        if(id == 1){
+            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
+            finish();
+        }
+        if(id == 1) {
+            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
+            finish();
+        }
+        if(id == 1) {
+            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
+            finish();
+        }
+
+    }
+
+
+
 
     private void loadlocale(){
 
