@@ -142,39 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void translator(){
-
-        String image;
-        String title;
-        String price;
-        String description;
-        String id1 ;
-        int id = 1 ;
-
-        String place;
-        String email;
-        String renterid;
-
-
-        if(id == 1) {
-            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
-            finish();
-        }
-        if(id == 1){
-            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
-            finish();
-        }
-        if(id == 1) {
-            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
-            finish();
-        }
-        if(id == 1) {
-            startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
-            finish();
-        }
-
-    }
-
 
 
 
