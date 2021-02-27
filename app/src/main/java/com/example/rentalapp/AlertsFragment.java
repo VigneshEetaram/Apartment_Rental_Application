@@ -39,63 +39,6 @@ public class AlertsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alerts, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView10);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        fAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        Query query = firebaseFirestore.collection("Announcement");
-        FirestoreRecyclerOptions<Alerts> options = new FirestoreRecyclerOptions.Builder<Alerts>()
-                .setQuery(query,Alerts.class)
-                .build();
-        adapter = new FirestoreRecyclerAdapter<Alerts, ItemViewHolder>(options) {
-            @NonNull
-            @Override
-            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.alertsrecyclerview,parent,false);
-                return new ItemViewHolder(v);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Alerts model) {
-                holder.Date.setText(model.getDate());
-                holder.Title.setText(model.getTitle());
-                holder.Description.setText(model.getDescription());
-            }
-        };
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
-        recyclerView.setAdapter(adapter);
-
-        return view;
-    }
-
-    static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        TextView Title;
-        TextView Date;
-        TextView Description;
-
-
-        public ItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            Title = itemView.findViewById(R.id.txt_alerts_title_recycler);
-            Date = itemView.findViewById(R.id.txt_alerts_date_recycler);
-            Description = itemView.findViewById(R.id.txt_alerts_description_recycler);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        adapter.stopListening();
+        return  view;
     }
 }

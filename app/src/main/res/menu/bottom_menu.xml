@@ -11,8 +11,8 @@
         android:icon="@drawable/ic_baseline_modify_24"/>
     <item
         android:id="@+id/thirdFragment"
-        android:title="View Ads"
-        android:icon="@drawable/ic_baseline_view_apartments_24"/>
+        android:title="Chats"
+        android:icon="@drawable/ic_baseline_chat_bubble_outline_24"/>
     <item
         android:id="@+id/fourthFragment"
         android:title="Account"

@@ -2,7 +2,7 @@ package com.example.rentalapp;
 
 public class Model {
 
-    String description,documentid,email,place,price,renterid,streetname,type;
+    String description,documentid,email,place,price,renterid,streetname,type,count;
 
 
     public Model() {
@@ -70,5 +70,13 @@ public class Model {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
     }
 }

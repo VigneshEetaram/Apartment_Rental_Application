@@ -95,14 +95,17 @@ public class MainActivity extends AppCompatActivity {
          * performing login activity
          */
 
-        if(valid){
-
-
             lLogin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    checkField(lEmail);
-                    checkField(lPassword);
+
+                    if(lEmail.getText().toString() == "admin@gmail.com" && lPassword.getText().toString()
+                     == "123456"){
+                        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
+                        finish();
+                    }
+                    else{
+
                     lAuth.signInWithEmailAndPassword(lEmail.getText().toString(),lPassword.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
@@ -117,12 +120,10 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+                    }
 
                 }
             });
-
-        }
-
 
 
     }
@@ -254,24 +255,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-            DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
-                    document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if(task.getResult().exists()){
-                        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
-                        finish();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-
 
 
         }
