@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.icu.text.CaseMap;
 import android.os.Bundle;
+import android.util.EventLogTags;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -141,6 +143,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
     private void loadlocale(){
 
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
@@ -168,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+
+                Log.d("TAG","Error Login "+ e.getMessage());
+                Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+
+
+
 
             }
         });
@@ -238,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
 
             DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
                     document(FirebaseAuth.getInstance().getCurrentUser().getUid());

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,11 @@ public class UpdatePassword extends AppCompatActivity {
                 String currentPassword = currentPass.getText().toString().trim();
                 String newPassword = newPass.getText().toString().trim();
                 String renewPassword = renewPass.getText().toString().trim();
+
+                Log.d("TAG","Value " + currentPassword);
+                Log.d("TAG","Value " + newPassword);
+                Log.d("TAG","Value " + renewPassword);
+
                 if(currentPassword.isEmpty()){
                     currentPass.setError("Enter your current password");
                     currentPass.requestFocus();
@@ -63,7 +69,7 @@ public class UpdatePassword extends AppCompatActivity {
                     return;
                 }
                 if(newPassword != renewPassword){
-                    renewPass.setError("password doesnt match ");
+                    renewPass.setError("password does-not match ");
                     renewPass.requestFocus();
                     return;
                 }
@@ -85,6 +91,7 @@ public class UpdatePassword extends AppCompatActivity {
                 user.updatePassword(newpass).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        Log.d("TAG","Update Password complete");
                         Toast.makeText(UpdatePassword.this, "Password updated", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UpdatePassword.this, FourthFragment.class));
                         finish();
@@ -92,6 +99,7 @@ public class UpdatePassword extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG","Update Password failed");
                         Toast.makeText(UpdatePassword.this, "Update failed", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -99,6 +107,7 @@ public class UpdatePassword extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Log.d("TAG","Enter wrong password");
                 Toast.makeText(UpdatePassword.this, "please enter the correct password", Toast.LENGTH_SHORT).show();
             }
         });
