@@ -173,6 +173,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+                Log.d("TAG","Error Login "+ e.getMessage());
+                Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+
+
+
+
             }
         });
 
@@ -242,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
 
             DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
                     document(FirebaseAuth.getInstance().getCurrentUser().getUid());

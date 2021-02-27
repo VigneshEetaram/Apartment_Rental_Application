@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,6 +103,8 @@ public class ConnectActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("TAG","Error");
+
         if (requestCode == gallery_pick && resultCode == RESULT_OK && data != null) {
             Uri imageURI = data.getData();
 
@@ -124,6 +127,8 @@ public class ConnectActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     Toast.makeText(ConnectActivity.this, "Profile Image Stored", Toast.LENGTH_SHORT).show();
 
+                    Log.d("TAG","Error");
+
                     final String downloadUrl = task.getResult().getUploadSessionUri().toString();
 
 
@@ -137,6 +142,46 @@ public class ConnectActivity extends AppCompatActivity {
 
 
     }
+    private void upoad(){
+
+
+
+        Log.d("TAG","Error");
+        LoadingBar.setTitle("Saving Data");
+        LoadingBar.setMessage("Please wait, data is being saved");
+        LoadingBar.show();
+        LoadingBar.setCanceledOnTouchOutside(true);
+
+  //      DRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()){
+////             //       String image = snapshot.child("profileImage").getValue().toString();String image2 = "https://cfwww.hgregoire.com/photos/by-size/site/480x320/file/2019/10/comme-neuf-1.jpg";
+////                    Log.d("TAG","Profile Image " + image);
+////                    Picasso.get().load(image).into(ProfileImage);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
+
+
+        checkField(UserName);
+        checkField(FullName);
+        checkField(Country);
+        if (valid) {
+            saveAccountInformation();
+
+
+        }
+
+
+    }
+
 
     private void saveAccountInformation() {
 
@@ -144,6 +189,7 @@ public class ConnectActivity extends AppCompatActivity {
         String fullName = FullName.getText().toString();
         String country = Country.getText().toString();
 
+        Log.d("TAG","Error");
         LoadingBar.setTitle("Saving Data");
         LoadingBar.setMessage("Please wait, data is being saved");
         LoadingBar.show();
@@ -158,11 +204,42 @@ public class ConnectActivity extends AppCompatActivity {
         userMap.put("Gander","Not Avalable");
         userMap.put("DOB","77777");
         userMap.put("RelationStatus","Not");
+        userMap.put("FullName",fullName);
+        userMap.put("Country",country);
+        userMap.put("FullName",fullName);
+        userMap.put("Country",country);
 
 
     }
 
+
+    private void sendUserToUpdatepassword() {
+        Log.d("TAG","Error");
+
+        Intent i = new Intent(ConnectActivity.this, UpdatePassword.class);
+        startActivity(i);
+        finish();
+    }
+
+
+    private void sendUserToregister() {
+
+        Intent i = new Intent(ConnectActivity.this, RegisterActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+
+
+    private void sendUserToMainActiviy() {
+
+        Intent i = new Intent(ConnectActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
+
+    }
     private void sendUserToMainActivity() {
+
         Intent i = new Intent(ConnectActivity.this, MainActivity.class);
         startActivity(i);
         finish();
@@ -175,9 +252,18 @@ public class ConnectActivity extends AppCompatActivity {
         if(TextField.getText().toString().isEmpty()){
             TextField.setError("Enter Text");
             valid = false;
-        }else{
+
+            Log.d("TAG","Error");
+
+        }
+
+        else
+            {
+
             valid = true;
         }
+
         return valid;
     }
+
 }
