@@ -174,13 +174,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             if(!result.exists()){
                                                 holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                 Map<String, Object> doc = new HashMap<>();
-                                                doc.put("id", model.getDocumentid());
+                                                doc.put("documentid", model.getDocumentid());
                                                 doc.put("email", model.getEmail());
-                                                doc.put("name", model.getStreetname());
+                                                doc.put("streetname", model.getStreetname());
                                                 doc.put("price", model.getPrice());
                                                 doc.put("place", model.getPlace());
                                                 doc.put("description", model.getDescription());
-                                                doc.put("userid", userID);
+                                                doc.put("renterid", model.getRenterid());
 
                                                 db.collection("Favorites").document(userID).collection("Selected").
                                                         document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -294,13 +294,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 if(!result.exists()){
                                                     holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                     Map<String, Object> doc = new HashMap<>();
-                                                    doc.put("id", model.getDocumentid());
+                                                    doc.put("documentid", model.getDocumentid());
                                                     doc.put("email", model.getEmail());
-                                                    doc.put("name", model.getStreetname());
+                                                    doc.put("streetname", model.getStreetname());
                                                     doc.put("price", model.getPrice());
                                                     doc.put("place", model.getPlace());
                                                     doc.put("description", model.getDescription());
-                                                    doc.put("userid", userID);
+                                                    doc.put("renterid", model.getRenterid());
 
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -422,13 +422,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 if(!result.exists()){
                                                     holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                     Map<String, Object> doc = new HashMap<>();
-                                                    doc.put("id", model.getDocumentid());
+                                                    doc.put("documentid", model.getDocumentid());
                                                     doc.put("email", model.getEmail());
-                                                    doc.put("name", model.getStreetname());
+                                                    doc.put("streetname", model.getStreetname());
                                                     doc.put("price", model.getPrice());
                                                     doc.put("place", model.getPlace());
                                                     doc.put("description", model.getDescription());
-                                                    doc.put("userid", userID);
+                                                    doc.put("renterid", model.getRenterid());
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -564,13 +564,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     if(!result.exists()){
                                         holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                         Map<String, Object> doc = new HashMap<>();
-                                        doc.put("id", model.getDocumentid());
+                                        doc.put("documentid", model.getDocumentid());
                                         doc.put("email", model.getEmail());
-                                        doc.put("name", model.getStreetname());
+                                        doc.put("streetname", model.getStreetname());
                                         doc.put("price", model.getPrice());
                                         doc.put("place", model.getPlace());
                                         doc.put("description", model.getDescription());
-                                        doc.put("userid", userID);
+                                        doc.put("renterid", model.getRenterid());
 
                                         db.collection("Favorites").document(userID).collection("Selected").
                                                 document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {

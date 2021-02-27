@@ -93,6 +93,7 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
 
+
                 holder.Title.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());

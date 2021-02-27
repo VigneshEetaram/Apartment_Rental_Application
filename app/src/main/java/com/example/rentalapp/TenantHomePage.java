@@ -29,7 +29,7 @@ public class TenantHomePage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this,  R.id.fragment2);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-        BottomNavigationView bottomNavigationView2 = (BottomNavigationView) findViewById(R.id.bottomNavigationView3);
+        BottomNavigationView bottomNavigationView2 = (BottomNavigationView) findViewById(R.id.bottomNavigationView4);
         int size = bottomNavigationView2.getMenu().size();
         for (int i = 0; i < size; i++) {
             bottomNavigationView2.getMenu().getItem(i).setCheckable(false);
