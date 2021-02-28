@@ -50,6 +50,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -65,6 +67,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
 
@@ -80,6 +83,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     FirebaseFirestore db,db2;
     SearchView searchView;
     Boolean isClicked = false;
+    private FirebaseFirestore mDb;
     FirestoreRecyclerOptions<Model> options;
     private GoogleMap mMap;
     MapView mapView;
@@ -96,6 +100,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 .findFragmentById(R.id.home_map);
         mapFragment.getMapAsync(this);
         tenantHomePage = new TenantHomePage().language();
+        mDb = FirebaseFirestore.getInstance();
         Button setlimit = v.findViewById(R.id.btn_set_limit);
         Button set = v.findViewById(R.id.btn_set);
         CardView setlimitcardview = v.findViewById(R.id.card_view_set_limit);
@@ -156,6 +161,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         holder.message.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+
                             }
                         });
 
@@ -174,13 +180,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                             if(!result.exists()){
                                                 holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                 Map<String, Object> doc = new HashMap<>();
-                                                doc.put("documentid", model.getDocumentid());
+                                                doc.put("id", model.getDocumentid());
                                                 doc.put("email", model.getEmail());
-                                                doc.put("streetname", model.getStreetname());
+                                                doc.put("name", model.getStreetname());
                                                 doc.put("price", model.getPrice());
                                                 doc.put("place", model.getPlace());
                                                 doc.put("description", model.getDescription());
-                                                doc.put("renterid", model.getRenterid());
+                                                doc.put("userid", userID);
 
                                                 db.collection("Favorites").document(userID).collection("Selected").
                                                         document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -294,13 +300,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 if(!result.exists()){
                                                     holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                     Map<String, Object> doc = new HashMap<>();
-                                                    doc.put("documentid", model.getDocumentid());
+                                                    doc.put("id", model.getDocumentid());
                                                     doc.put("email", model.getEmail());
-                                                    doc.put("streetname", model.getStreetname());
+                                                    doc.put("name", model.getStreetname());
                                                     doc.put("price", model.getPrice());
                                                     doc.put("place", model.getPlace());
                                                     doc.put("description", model.getDescription());
-                                                    doc.put("renterid", model.getRenterid());
+                                                    doc.put("userid", userID);
 
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -422,13 +428,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 if(!result.exists()){
                                                     holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                                     Map<String, Object> doc = new HashMap<>();
-                                                    doc.put("documentid", model.getDocumentid());
+                                                    doc.put("id", model.getDocumentid());
                                                     doc.put("email", model.getEmail());
-                                                    doc.put("streetname", model.getStreetname());
+                                                    doc.put("name", model.getStreetname());
                                                     doc.put("price", model.getPrice());
                                                     doc.put("place", model.getPlace());
                                                     doc.put("description", model.getDescription());
-                                                    doc.put("renterid", model.getRenterid());
+                                                    doc.put("userid", userID);
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -546,6 +552,46 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 holder.message.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Chatroom").
+                                document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()){
+                                    Intent intent = new Intent(getActivity(), ChatroomActivity.class);
+                                    intent.putExtra("tenantid",FirebaseAuth.getInstance().getUid());
+                                    intent.putExtra("documentid",model.getDocumentid());
+                                    intent.putExtra("renter",model.getRenterid());
+                                    intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                    intent.putExtra("chatroomname",model.getStreetname());
+                                    startActivity(intent);
+                                }
+                                else{
+                                    DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Chatroom").
+                                            document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                    Map<String, Object> userInfo = new HashMap<>();
+                                    userInfo.put("tenantid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    userInfo.put("documentid", model.getDocumentid());
+                                    userInfo.put("renterid", model.getRenterid());
+                                    userInfo.put("chatid", FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                    userInfo.put("chatroomname", model.getStreetname());
+                                    documentReference3.set(userInfo);
+                                    Intent intent = new Intent(getActivity(), ChatroomActivity.class);
+                                    intent.putExtra("tenantid",FirebaseAuth.getInstance().getUid());
+                                    intent.putExtra("documentid",model.getDocumentid());
+                                    intent.putExtra("renter",model.getRenterid());
+                                    intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                    intent.putExtra("chatroomname",model.getStreetname());
+                                    startActivity(intent);
+
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
                     }
                 });
 
@@ -564,13 +610,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     if(!result.exists()){
                                         holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
                                         Map<String, Object> doc = new HashMap<>();
-                                        doc.put("documentid", model.getDocumentid());
+                                        doc.put("id", model.getDocumentid());
                                         doc.put("email", model.getEmail());
-                                        doc.put("streetname", model.getStreetname());
+                                        doc.put("name", model.getStreetname());
                                         doc.put("price", model.getPrice());
                                         doc.put("place", model.getPlace());
                                         doc.put("description", model.getDescription());
-                                        doc.put("renterid", model.getRenterid());
+                                        doc.put("userid", userID);
 
                                         db.collection("Favorites").document(userID).collection("Selected").
                                                 document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -717,6 +763,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         super.onStop();
         adapter.stopListening();
     }
+
 
 
 }

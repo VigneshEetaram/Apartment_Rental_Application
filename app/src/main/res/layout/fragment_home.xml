@@ -24,6 +24,7 @@
         android:iconifiedByDefault="false"
         android:layout_margin="10dp"
         android:elevation="5dp"
+        android:visibility="invisible"
         android:background="@drawable/input_design"/>
 
     <!-- TODO: Update blank fragment layout -->
@@ -38,7 +39,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="90dp"
+    app:behavior_peekHeight="550dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
 

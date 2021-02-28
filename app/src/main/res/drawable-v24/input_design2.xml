@@ -8,7 +8,7 @@
     </stroke>
 
     <solid
-        android:color="@color/navyBlueDark"
+        android:color="#FF8A3F"
         >
     </solid>
 

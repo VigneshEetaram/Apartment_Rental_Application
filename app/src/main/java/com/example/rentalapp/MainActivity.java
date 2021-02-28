@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.icu.text.CaseMap;
 import android.os.Bundle;
-import android.util.EventLogTags;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         lRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
                 finish();
 
             }
@@ -96,12 +94,16 @@ public class MainActivity extends AppCompatActivity {
         /**
          * performing login activity
          */
-        if(valid){
-        lLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                    lAuth.signInWithEmailAndPassword(lEmail.getText().toString(), lPassword.getText().toString())
+        if(valid){
+
+
+            lLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkField(lEmail);
+                    checkField(lPassword);
+                    lAuth.signInWithEmailAndPassword(lEmail.getText().toString(),lPassword.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
@@ -110,16 +112,18 @@ public class MainActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG", "Error Login " + e.getMessage());
+                            Log.d("TAG","Error Login "+ e.getMessage());
                             Toast.makeText(MainActivity.this, "fail login", Toast.LENGTH_SHORT).show();
 
                         }
                     });
 
 
-            }
-        });
-    }
+                }
+            });
+
+        }
+
 
 
     }
@@ -136,9 +140,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
     }
-
-
-
 
     private void loadlocale(){
 
@@ -168,12 +169,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
-                Log.d("TAG","Error Login "+ e.getMessage());
-                Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
-
-
-
-
             }
         });
 
@@ -193,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
                 document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -258,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
             DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
                     document(FirebaseAuth.getInstance().getCurrentUser().getUid());
             documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -292,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
 
 
         }

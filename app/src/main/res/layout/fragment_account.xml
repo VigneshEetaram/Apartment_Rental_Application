@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="50dp"
-                    android:text="FIRST NAME"
+                    android:text="@string/firstname"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="25dp"
-                    android:text="SECOND NAME"
+                    android:text="@string/secondname"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -86,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="25dp"
-                    android:text="EMAIL ADDRESS"
+                    android:text="@string/emailaddress"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="25dp"
-                    android:text="PHONE"
+                    android:text="@string/phone"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="50dp"
-                    android:text="Change Password"
+                    android:text="@string/changepassword"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="35dp"
                     android:layout_marginBottom="25dp"
-                    android:text="Log out"
+                    android:text="@string/logoutofrentalapp"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 

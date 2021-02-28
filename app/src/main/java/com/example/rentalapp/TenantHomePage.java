@@ -9,15 +9,17 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Locale;
 
 public class TenantHomePage extends AppCompatActivity {
-
+    Toolbar toolbar;
     public String lang = "en";
 
     @Override
@@ -28,32 +30,8 @@ public class TenantHomePage extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView2);
         NavController navController = Navigation.findNavController(this,  R.id.fragment2);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-
-        BottomNavigationView bottomNavigationView2 = (BottomNavigationView) findViewById(R.id.bottomNavigationView4);
-        int size = bottomNavigationView2.getMenu().size();
-        for (int i = 0; i < size; i++) {
-            bottomNavigationView2.getMenu().getItem(i).setCheckable(false);
-        }
-        bottomNavigationView2.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.english:
-                        Toast.makeText(TenantHomePage.this, "English", Toast.LENGTH_SHORT).show();
-                        translate("en");
-                        lang = "en";
-                        recreate();
-                        break;
-                    case R.id.french:
-                        Toast.makeText(TenantHomePage.this, "French", Toast.LENGTH_SHORT).show();
-                        translate("fr");
-                        lang = "fr";
-                        recreate();
-                        break;
-                }
-                return true;
-            }
-        });
+        toolbar = findViewById(R.id.tenant_home_page_toolbar);
+        setSupportActionBar(toolbar);
 
     }
 
@@ -81,5 +59,34 @@ public class TenantHomePage extends AppCompatActivity {
     public String language(){
         String langs = lang;
         return langs;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbarmenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_bar_EN:
+                translate("en");
+                lang = "en";
+                recreate();
+                break;
+            case R.id.action_bar_FR:
+                translate("fr");
+                lang = "fr";
+                recreate();
+                break;
+            case R.id.action_bar_About_US:
+
+                break;
+            case R.id.action_bar_About_Signout:
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

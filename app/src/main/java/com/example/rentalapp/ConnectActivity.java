@@ -137,7 +137,7 @@ public class ConnectActivity extends AppCompatActivity {
 
         } else if (resultCode == 0) {
             Exception error;
-            Toast.makeText(this, "Eoor ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error ", Toast.LENGTH_SHORT).show();
         }
 
 
