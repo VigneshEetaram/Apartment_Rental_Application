@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Locale;
 
@@ -84,7 +85,7 @@ public class TenantHomePage extends AppCompatActivity {
 
                 break;
             case R.id.action_bar_About_Signout:
-
+                FirebaseAuth.getInstance().signOut();
                 break;
         }
         return super.onOptionsItemSelected(item);

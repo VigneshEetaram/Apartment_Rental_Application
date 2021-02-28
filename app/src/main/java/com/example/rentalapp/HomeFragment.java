@@ -233,6 +233,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 intent.putExtra("Price",model.getPrice());
                                 intent.putExtra("Title",model.getStreetname());
                                 intent.putExtra("UserID",userID);
+                                intent.putExtra("Place",model.getPlace());
                                 intent.putExtra("DocumentID",model.getDocumentid());
                                 intent.putExtra("Description",model.getDescription());
                                 startActivity(intent);
@@ -354,6 +355,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("Price",model.getPrice());
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
+                                    intent.putExtra("Place",model.getPlace());
                                     intent.putExtra("Description",model.getDescription());
                                     startActivity(intent);
                                 }
@@ -480,6 +482,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
                                     intent.putExtra("DocumentID",model.getDocumentid());
+                                    intent.putExtra("Place",model.getPlace());
                                     intent.putExtra("Description",model.getDescription());
                                     startActivity(intent);
                                 }
@@ -664,6 +667,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("UserID",userID);
                         intent.putExtra("DocumentID",model.getDocumentid());
+                        intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
                     }

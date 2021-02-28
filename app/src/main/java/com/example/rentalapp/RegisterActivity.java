@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText mName, mEmail, mPassword, mPhoneNumber;
+    EditText fName, lName, mEmail, mPassword, mPhoneNumber;
     ImageView mImage;
     Button mRegisterBTN, mLoginBTN;
     Boolean valid = true;
@@ -44,7 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mName = (EditText) findViewById(R.id.register_name);
+        fName = (EditText) findViewById(R.id.register_firstname);
+        lName = (EditText) findViewById(R.id.register_secondname);
         mEmail = (EditText)findViewById(R.id.register_Email);
         mPassword = (EditText)findViewById(R.id.register_password);
         mPhoneNumber = (EditText)findViewById(R.id.register_phone);
@@ -99,17 +100,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
-
     private void registerUser() {
         final String email = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
-        final String name = mName.getText().toString().trim();
+        final String firstname = fName.getText().toString().trim();
+        final String secondname = lName.getText().toString().trim();
         final String number = mPhoneNumber.getText().toString().trim();
 
-        if(name.isEmpty()){
-            mName.setError("Fullname is required");
-            mName.requestFocus();
+        if(firstname.isEmpty()){
+            fName.setError("First name is required");
+            fName.requestFocus();
+            return;
+        }
+        if(secondname.isEmpty()){
+            lName.setError("Second name is required");
+            lName.requestFocus();
             return;
         }
         if(number.isEmpty()){
@@ -148,41 +153,41 @@ public class RegisterActivity extends AppCompatActivity {
                     FirebaseUser user = fAuth.getCurrentUser();
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     Toast.makeText(RegisterActivity.this, "Register Successfull", Toast.LENGTH_SHORT).show();
-                    DocumentReference documentReference = fStore.collection("Users").document(user.getUid());
-                    Map<String, Object> userInfo = new HashMap<>();
-                    userInfo.put("FullName", name);
-                    userInfo.put("UserID", userID);
-                    userInfo.put("Email", email);
-                    userInfo.put("PhoneNumber", number);
 
-                    Map<String, Object> users = new HashMap<>();
-                    users.put("FullName", name);
-                    users.put("UserID", userID);
-                    users.put("Email", email);
-                    users.put("PhoneNumber", number);
 
                     if(mTenant.isChecked()){
-                        userInfo.put("isUser", "1");
-                        uservalue = 1;
+                        uservalue = 2;
+                        Map<String, Object> userInfo = new HashMap<>();
+                        userInfo.put("firstname", firstname);
+                        userInfo.put("secondname", secondname);
+                        userInfo.put("userid", userID);
+                        userInfo.put("email", email);
+                        userInfo.put("phonenumber", number);
+                        userInfo.put("isuser", "2");
                         DocumentReference documentReferences = fStore.collection("Tenant").document(user.getUid());
                         documentReferences.set(userInfo);
                     }
 
                     if(mRenter.isChecked()){
-                        userInfo.put("isUser", "2");
-                        uservalue = 2;
+                        uservalue = 1;
+                        Map<String, Object> userInfo = new HashMap<>();
+                        userInfo.put("firstname", firstname);
+                        userInfo.put("secondname", secondname);
+                        userInfo.put("userid", userID);
+                        userInfo.put("email", email);
+                        userInfo.put("phonenumber", number);
+                        userInfo.put("isuser", "1");
                         DocumentReference documentReferences = fStore.collection("Renter").document(user.getUid());
                         documentReferences.set(userInfo);
                     }
-                    documentReference.set(userInfo);
 
                     if(uservalue == 1){
-                        startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
+                        startActivity(new Intent(getApplicationContext(), RenterHomePage.class));
                         finish();
                     }
 
                     if(uservalue == 2){
-                        startActivity(new Intent(getApplicationContext(), RenterHomePage.class));
+                        startActivity(new Intent(getApplicationContext(), TenantHomePage.class));
                         finish();
                     }
 

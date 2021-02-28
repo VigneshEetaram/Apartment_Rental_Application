@@ -127,6 +127,8 @@ public class FavoritesFragment extends Fragment {
                         intent.putExtra("Price",model.getPrice());
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("UserID",userID);
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("DocumentID",model.getDocumentid());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
                     }
