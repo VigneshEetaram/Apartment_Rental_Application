@@ -34,11 +34,15 @@
                     app:cardCornerRadius="20dp"
                     app:cardMaxElevation="15dp">
 
-                    <ImageView
+                    <com.denzcoskun.imageslider.ImageSlider
                         android:id="@+id/img_apt_details_tenant"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:scaleType="fitXY"
+                        app:auto_cycle="false"
+                        app:delay="0"
+                        app:period="1000"
+                        app:corner_radius="5"
                         />
                 </androidx.cardview.widget.CardView>
 

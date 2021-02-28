@@ -230,10 +230,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         holder.cardView.setOnClickListener(new View.OnClickListener() {
                             @Override public void onClick(View view) {
                                 Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
-
                                 intent.putExtra("Price",model.getPrice());
                                 intent.putExtra("Title",model.getStreetname());
                                 intent.putExtra("UserID",userID);
+                                intent.putExtra("DocumentID",model.getDocumentid());
                                 intent.putExtra("Description",model.getDescription());
                                 startActivity(intent);
                             }
@@ -350,8 +350,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             holder.cardView.setOnClickListener(new View.OnClickListener() {
                                 @Override public void onClick(View view) {
                                     Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
-
-
+                                    intent.putExtra("DocumentID",model.getDocumentid());
                                     intent.putExtra("Price",model.getPrice());
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
@@ -480,6 +479,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("Price",model.getPrice());
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
+                                    intent.putExtra("DocumentID",model.getDocumentid());
                                     intent.putExtra("Description",model.getDescription());
                                     startActivity(intent);
                                 }
@@ -663,6 +663,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         intent.putExtra("Price",model.getPrice());
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("UserID",userID);
+                        intent.putExtra("DocumentID",model.getDocumentid());
                         intent.putExtra("Description",model.getDescription());
                         startActivity(intent);
                     }
