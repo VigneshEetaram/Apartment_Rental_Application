@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         lRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
                 finish();
 
             }
@@ -96,19 +96,12 @@ public class MainActivity extends AppCompatActivity {
         /**
          * performing login activity
          */
+        if(valid){
+        lLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-            lLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if(lEmail.getText().toString() == "admin@gmail.com" && lPassword.getText().toString()
-                     == "123456"){
-                        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
-                        finish();
-                    }
-                    else{
-
-                    lAuth.signInWithEmailAndPassword(lEmail.getText().toString(),lPassword.getText().toString())
+                    lAuth.signInWithEmailAndPassword(lEmail.getText().toString(), lPassword.getText().toString())
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
@@ -117,15 +110,16 @@ public class MainActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG","Error Login "+ e.getMessage());
+                            Log.d("TAG", "Error Login " + e.getMessage());
                             Toast.makeText(MainActivity.this, "fail login", Toast.LENGTH_SHORT).show();
 
                         }
                     });
-                    }
 
-                }
-            });
+
+            }
+        });
+    }
 
 
     }
@@ -199,8 +193,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
-        finish();
+        DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
+                document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
+                    startActivity(new Intent(MainActivity.this, AdminHomePage.class));
+                    finish();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
 
     }
 
@@ -258,6 +266,23 @@ public class MainActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     if(task.getResult().exists()){
                         startActivity(new Intent(getApplicationContext(),TenantHomePage.class));
+                        finish();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+
+            DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
+                    document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.getResult().exists()){
+                        startActivity(new Intent(MainActivity.this, AdminHomePage.class));
                         finish();
                     }
                 }

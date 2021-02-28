@@ -110,6 +110,7 @@ public class MyadsFragment extends Fragment {
                             intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
+                            intent.putExtra("Type", model.getType());
                             startActivity(intent);
                         }
                         if (id == R.id.delete){
@@ -154,6 +155,7 @@ public class MyadsFragment extends Fragment {
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
+                        intent.putExtra("Type", model.getType());
                         startActivity(intent);
                     }
                 });
