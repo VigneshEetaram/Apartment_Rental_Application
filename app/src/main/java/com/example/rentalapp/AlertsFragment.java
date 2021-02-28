@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,17 +29,81 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 public class AlertsFragment extends Fragment {
+
+
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
-    String userID;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alerts, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = view.findViewById(R.id.recyclerView_alerts);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        Query query = firebaseFirestore.collection("Chatroom").whereEqualTo("tenantid",FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FirestoreRecyclerOptions<ChatUserModel> options = new FirestoreRecyclerOptions.Builder<ChatUserModel>()
+                .setQuery(query,ChatUserModel.class)
+                .build();
+
+        adapter = new FirestoreRecyclerAdapter<ChatUserModel, ThirdFragment.ItemViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public ThirdFragment.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user_chat_list_item,parent,false);
+                return new ThirdFragment.ItemViewHolder(v);
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ThirdFragment.ItemViewHolder holder, int position, @NonNull ChatUserModel model) {
+
+                holder.Chatroom.setText(model.getChatroomname());
+                holder.Username.setText(model.getRenterid());
+
+                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), ChatroomActivity.class);
+                        intent.putExtra("tenantid",model.getTenantid());
+                        intent.putExtra("documentid",model.getDocumentid());
+                        intent.putExtra("renter",model.getRenterid());
+                        intent.putExtra("chatid",model.getChatid());
+                        intent.putExtra("chatroomname",model.getChatroomname());
+                        startActivity(intent);
+                    }
+                });
+
+            }
+        };
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1));
+        recyclerView.setAdapter(adapter);
+
+
+
         return  view;
+    }
+
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        TextView Chatroom;
+        TextView Username;
+        CardView linearLayout;
+
+
+        public ItemViewHolder(@NonNull View itemView) {
+            super(itemView);
+            Chatroom = itemView.findViewById(R.id.txt_chatlist_chatroom);
+            Username = itemView.findViewById(R.id.txt_chatlist_username);
+            linearLayout = itemView.findViewById(R.id.card_layout_chat_user_list);
+
+        }
     }
 }
