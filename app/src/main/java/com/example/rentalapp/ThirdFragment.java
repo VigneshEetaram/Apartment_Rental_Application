@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
@@ -35,13 +36,25 @@ import java.util.Map;
 
 
 public class ThirdFragment extends Fragment {
+
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private FirestoreRecyclerAdapter adapter;
+    FirebaseAuth fAuth;
+    FirebaseFirestore db;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_third, container, false);
 
-        return v;
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = view.findViewById(R.id.recyclerView_third);
+        fAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        return view;
 
     }
 
