@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RentalApp">
-        <activity android:name=".ConnectActivity"></activity>
+        <activity android:name=".ConnectActivity" />
         <activity android:name=".SendAnnouncements" />
         <activity android:name=".UpdatePassword" />
         <activity android:name=".ApartmentEditDetails" />
