@@ -2,11 +2,13 @@ package com.example.rentalapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.ConfigurationCompat;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
@@ -21,6 +23,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.internal.$Gson$Preconditions;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -37,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TenantApartmentDetails extends AppCompatActivity {
@@ -46,6 +55,7 @@ public class TenantApartmentDetails extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     int count;
+    String currentLanguage = Locale.getDefault().getLanguage();
     List<SlideModel> slideModels = new ArrayList<>();
 
     @Override
@@ -62,6 +72,9 @@ public class TenantApartmentDetails extends AppCompatActivity {
         share = (Button) findViewById(R.id.btn_share);
         report = (Button) findViewById(R.id.btn_report);
         fAuth = FirebaseAuth.getInstance();
+
+
+
         db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
         String price = intent.getExtras().getString("Price");
@@ -73,7 +86,9 @@ public class TenantApartmentDetails extends AppCompatActivity {
         Title.setText(title);
         Place.setText(place);
         Description.setText(description);
-
+        if (!currentLanguage.toLowerCase().contains("English")) {
+            trans(description);
+        }
 
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
                 document(id);
@@ -163,4 +178,44 @@ public class TenantApartmentDetails extends AppCompatActivity {
         });
 
     }
+    private void trans(String description) {
+        String des = description;
+        TranslatorOptions options =
+                new TranslatorOptions.Builder()
+                        .setSourceLanguage(TranslateLanguage.ENGLISH)
+                        .setTargetLanguage(TranslateLanguage.FRENCH)
+                        .build();
+        final Translator englishFrenchTranslator =
+                Translation.getClient(options);
+
+
+        DownloadConditions conditions = new DownloadConditions.Builder()
+                .requireWifi()
+                .build();
+        englishFrenchTranslator.downloadModelIfNeeded(conditions)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(TenantApartmentDetails.this, "Success", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(TenantApartmentDetails.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        englishFrenchTranslator.translate(des).addOnSuccessListener(new OnSuccessListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Description.setText(s);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(TenantApartmentDetails.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
