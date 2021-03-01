@@ -49,6 +49,7 @@ public class UserRenterFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_user_renter, container, false);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.recyclerView7);
         fAuth = FirebaseAuth.getInstance();
@@ -80,7 +81,7 @@ public class UserRenterFragment extends Fragment {
                 holder.toolbar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String id = model.getUserid();
+                      //  String id = model.getUserid();
                         db.collection("Renter").document(model.getUserid())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -107,7 +108,7 @@ public class UserRenterFragment extends Fragment {
         TextView fName, sName;
         TextView Phone;
         TextView ids;
-        String id;
+      //  String id;
         Toolbar toolbar;
 
         public ItemViewHolder(@NonNull View itemView) {

@@ -39,6 +39,7 @@ import java.util.List;
 
 
 public class AllAdsFragment extends Fragment {
+
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
@@ -49,11 +50,13 @@ public class AllAdsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_allads, container, false);
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = view.findViewById(R.id.recyclerView);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
         Query query = firebaseFirestore.collection("Apartments");
 
         FirestoreRecyclerOptions<Model> options = new FirestoreRecyclerOptions.Builder<Model>()

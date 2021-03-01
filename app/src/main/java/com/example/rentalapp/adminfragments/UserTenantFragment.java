@@ -28,12 +28,14 @@ import com.google.firebase.firestore.Query;
 
 
 public class UserTenantFragment extends Fragment {
+
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     String userID;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

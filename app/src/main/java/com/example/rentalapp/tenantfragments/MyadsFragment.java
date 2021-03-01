@@ -43,6 +43,7 @@ import java.util.List;
 
 
 public class MyadsFragment extends Fragment {
+
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
