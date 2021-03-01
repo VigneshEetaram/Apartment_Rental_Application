@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:id="@+id/card_layout_chat_admin_chatroom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        android:orientation="vertical"
+        app:cardBackgroundColor="@color/blue1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="25dp"
+            android:textColor="@color/Black"
+            android:paddingLeft="35dp"
+            android:id="@+id/txt_chatlist_admin_rentername"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/Black"
+            android:layout_marginTop="60dp"
+            android:paddingLeft="35dp"
+            android:id="@+id/txt_chatlist_admin_tenantname"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/Black"
+            android:layout_marginTop="85dp"
+            android:paddingLeft="35dp"
+            android:id="@+id/txt_chatlist_admin_renterchatroom"/>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

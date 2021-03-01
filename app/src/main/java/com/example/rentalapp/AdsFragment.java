@@ -17,16 +17,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.rentalapp.tenantfragments.MyadsFragment;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AdsFragment extends Fragment {
@@ -36,6 +43,7 @@ public class AdsFragment extends Fragment {
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     String userID;
+    List<SlideModel> slideModels = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +70,22 @@ public class AdsFragment extends Fragment {
 
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
+
+                DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
+                        document(model.getDocumentid());
+                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        int count = Integer.valueOf(documentSnapshot.getString("count"));
+                        for (int i=0; i<count;i++){
+                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
+                        }
+
+                        holder.Image.setImageList(slideModels,true);
+                    }
+                });
+
                 holder.Name.setText(model.getStreetname());
                 holder.Price.setText(model.getPrice());
                 holder.Description.setText(model.getDescription());
@@ -109,8 +133,6 @@ public class AdsFragment extends Fragment {
                                 }
                             });
 
-
-
                         }
                         return false;
                     }
@@ -143,18 +165,18 @@ public class AdsFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        ImageView Image;
+        ImageSlider Image;
         String id;
         Toolbar toolbar;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            Price = itemView.findViewById(R.id.txt_pricemyads);
-            Image = itemView.findViewById(R.id.Img_apartmentmyads);
-            Name = itemView.findViewById(R.id.txt_titlemyads);
-            Place = itemView.findViewById(R.id.txt_placemyads);
-            Description = itemView.findViewById(R.id.txt_descriptionmyads);
-            toolbar = itemView.findViewById(R.id.toolbar_myads);
+            Price = itemView.findViewById(R.id.txt_admin_pricemyads);
+            Image = itemView.findViewById(R.id.Img_admin_apartmentmyads);
+            Name = itemView.findViewById(R.id.txt_admin_titlemyads);
+            Place = itemView.findViewById(R.id.txt_admin_placemyads);
+            Description = itemView.findViewById(R.id.txt_admin_descriptionmyads);
+            toolbar = itemView.findViewById(R.id.toolbar_admin_myads);
         }
     }
 

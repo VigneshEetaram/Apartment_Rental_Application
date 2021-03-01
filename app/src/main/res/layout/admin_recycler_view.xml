@@ -10,7 +10,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardViewadmin"
         app:cardCornerRadius="20dp"
         android:elevation="8dp"
         android:layout_width="match_parent"
@@ -21,15 +21,19 @@
             android:layout_height="wrap_content">
 
 
-            <ImageView
-                android:id="@+id/Img_apartmentmyads"
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/Img_admin_apartmentmyads"
                 android:layout_width="400dp"
                 android:layout_height="200dp"
                 android:adjustViewBounds="true"
-                android:background="#3a5ebf"/>
+                android:background="#3a5ebf"
+                app:auto_cycle="false"
+                app:delay="0"
+                app:period="1000"
+                app:corner_radius="5"/>
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_myads"
+                android:id="@+id/toolbar_admin_myads"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="350dp"
@@ -38,33 +42,33 @@
 
 
             <TextView
-                android:id="@+id/txt_titlemyads"
+                android:id="@+id/txt_admin_titlemyads"
                 android:layout_marginTop="15dp"
-                android:layout_below="@id/Img_apartmentmyads"
+                android:layout_below="@id/Img_admin_apartmentmyads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black" />
 
 
             <TextView
-                android:id="@+id/txt_pricemyads"
+                android:id="@+id/txt_admin_pricemyads"
                 android:layout_marginTop="15dp"
-                android:layout_below="@id/txt_titlemyads"
+                android:layout_below="@id/txt_admin_titlemyads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/txt_placemyads"
+                android:id="@+id/txt_admin_placemyads"
                 android:layout_marginTop="15dp"
-                android:layout_below="@id/txt_pricemyads"
+                android:layout_below="@id/txt_admin_pricemyads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/txt_descriptionmyads"
-                android:layout_below="@id/txt_placemyads"
+                android:id="@+id/txt_admin_descriptionmyads"
+                android:layout_below="@id/txt_admin_placemyads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
