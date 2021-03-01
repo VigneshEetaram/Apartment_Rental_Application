@@ -15,7 +15,7 @@
             android:layout_height="950dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="60dp"
-            android:backgroundTint="#82C4B0"
+            android:backgroundTint="@color/babyBlue"
             app:cardMaxElevation="8dp"
             app:cardCornerRadius="15dp">
 
@@ -89,6 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
+                    android:textColor="@color/white"
                     android:layout_marginBottom="25dp"
                     android:background="@drawable/input_design2"
                     android:text="Submit"/>

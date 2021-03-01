@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
+            android:textColor="@color/white"
             android:background="@drawable/input_design2"
             android:text="Send Announcements"/>
 
@@ -30,6 +31,7 @@
             android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
+            android:textColor="@color/white"
             android:background="@drawable/input_design2"
             android:text="View User Reports"/>
 
@@ -38,6 +40,7 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
             android:background="@drawable/input_design2"
@@ -47,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Out"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/input_design2"
             tools:layout_editor_absoluteX="101dp"

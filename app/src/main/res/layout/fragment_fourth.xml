@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="25dp"
-        android:backgroundTint="#d4dcf2"
+        android:backgroundTint="@color/babyBlue"
         android:elevation="15dp">
 
 

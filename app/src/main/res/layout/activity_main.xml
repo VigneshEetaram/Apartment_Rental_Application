@@ -36,11 +36,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text = "@string/login"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/aclonica"
+                android:text="@string/login"
+                android:textColor="@color/navyBlueDark"
                 android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTxt_Email"
@@ -81,17 +83,19 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_design2"
                 android:text="@string/login"
+                android:textColor="@color/White"
                 tools:layout_editor_absoluteX="103dp"
                 tools:layout_editor_absoluteY="282dp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_register"
-                android:layout_gravity="center"
                 android:layout_width="310dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="@string/register"
                 android:background="@drawable/input_design2"
+                android:text="@string/register"
+                android:textColor="@color/White"
                 tools:layout_editor_absoluteX="103dp"
                 tools:layout_editor_absoluteY="282dp" />
 

@@ -67,8 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Send"
                 android:background="@drawable/input_design2"
+                android:text="Send"
+                android:textColor="#FFFFFF"
                 tools:layout_editor_absoluteX="115dp"
                 tools:layout_editor_absoluteY="330dp" />
         </LinearLayout>

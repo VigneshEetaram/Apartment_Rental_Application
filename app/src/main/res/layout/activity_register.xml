@@ -148,12 +148,13 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/register_BTN"
-                android:layout_gravity="center"
                 android:layout_width="310dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Register"
                 android:background="@drawable/input_design2"
+                android:text="Register"
+                android:textColor="@color/White"
                 tools:layout_editor_absoluteX="103dp"
                 tools:layout_editor_absoluteY="282dp" />
 
@@ -165,8 +166,9 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/input_design2"
                 android:text="login"
+                android:textColor="@color/White"
                 tools:layout_editor_absoluteX="103dp"
-                tools:layout_editor_absoluteY="282dp"/>
+                tools:layout_editor_absoluteY="282dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
