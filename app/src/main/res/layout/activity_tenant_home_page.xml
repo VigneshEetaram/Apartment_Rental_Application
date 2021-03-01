@@ -11,20 +11,20 @@
         android:id="@+id/tenant_home_page_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:background="@color/navyBlueDark"
         android:gravity="top"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleMarginStart="35dp"
-        android:background="@color/blue1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleMarginStart="35dp">
 
         <TextView
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="26sp"/>
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>
 
