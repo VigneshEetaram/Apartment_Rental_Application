@@ -2,25 +2,23 @@ package com.example.rentalapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.os.ConfigurationCompat;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.res.Resources;
-import android.net.Uri;
+import androidx.appcompat.widget.Toolbar;
+
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,9 +52,11 @@ public class TenantApartmentDetails extends AppCompatActivity {
     Button btn_showMap,share,report;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
+    public String lang = "en";
     int count;
     String currentLanguage = Locale.getDefault().getLanguage();
     List<SlideModel> slideModels = new ArrayList<>();
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,17 @@ public class TenantApartmentDetails extends AppCompatActivity {
         report = (Button) findViewById(R.id.btn_report);
         fAuth = FirebaseAuth.getInstance();
 
-
+        toolbar = findViewById(R.id.tenant_apartment_details_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TenantApartmentDetails.this,TenantHomePage.class));
+                finish();
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
@@ -223,6 +233,61 @@ public class TenantApartmentDetails extends AppCompatActivity {
                 Toast.makeText(TenantApartmentDetails.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbarmenu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_bar_EN:
+                translate("en");
+                lang = "en";
+                recreate();
+                break;
+            case R.id.action_bar_FR:
+                translate("fr");
+                lang = "fr";
+                recreate();
+                break;
+            case R.id.action_bar_About_US:
+                startActivity(new Intent(TenantApartmentDetails.this,ContactUs.class));
+
+                break;
+            case R.id.action_bar_About_Signout:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void translate(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        editor.putString("My_Lang",lang);
+        editor.apply();
+
+    }
+
+    private void loadlocale(){
+
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        String language = prefs.getString("My_Lang","");
+        translate(language);
+    }
+
+    public String language(){
+        String langs = lang;
+        return langs;
     }
 
 }

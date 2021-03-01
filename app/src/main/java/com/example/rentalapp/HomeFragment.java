@@ -504,7 +504,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             }
         });
-        searchView = v.findViewById(R.id.search_view_home);
+        searchView = v.findViewById(R.id.search_view_home_bottom_view);
         mapView = (MapView) v.findViewById(R.id.mapViewHomeFragment);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(this);

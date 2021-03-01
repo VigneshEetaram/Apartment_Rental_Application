@@ -15,6 +15,12 @@
     <string name="changepassword">Change Password</string>
     <string name="logoutofrentalapp">Log out of RentalApp</string>
     <string name="searchbylocation">Search by location</string>
+    <string name="price">PRICE</string>
+    <string name="setlimit">Set limit</string>
+    <string name="contactusdesc">This is a apartment rental application created by five students from cegep college as their final year project</string>
+    <string name="contactus">Contact Us</string>
+
+
 
     <!-- Firestore Strings -->
     <string name="collection_users">Users</string>

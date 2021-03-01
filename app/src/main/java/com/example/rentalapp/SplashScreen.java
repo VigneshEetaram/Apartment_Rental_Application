@@ -10,8 +10,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -45,9 +47,64 @@ public class SplashScreen extends AppCompatActivity {
                 try{
                     sleep(3000);
 
+                    if(FirebaseAuth.getInstance().getCurrentUser() != null){
 
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("Renter").
+                                document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()){
+                                    startActivity(new Intent(SplashScreen.this,RenterHomePage.class));
+                                    finish();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
+                        DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Tenant").
+                                document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()){
+                                    startActivity(new Intent(SplashScreen.this,TenantHomePage.class));
+                                    finish();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
+                        DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Admin").
+                                document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        documentReference3.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.getResult().exists()){
+                                    startActivity(new Intent(SplashScreen.this, AdminHomePage.class));
+                                    finish();
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
+
+                    }
+                    else{startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         finish();
+                    }
 
 
                 } catch (InterruptedException e) {

@@ -13,17 +13,20 @@
         android:layout_height="?actionBarSize"
         android:background="@color/navyBlueDark"
         android:gravity="top"
+        app:navigationIcon="@drawable/ic_baseline_back_24"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleMarginStart="35dp">
+        app:titleMarginStart="15dp">
 
         <TextView
+            android:layout_marginTop="10dp"
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
+            android:textSize="20sp"
+            android:text="RentalApp"
             android:textStyle="bold" />
 
     </androidx.appcompat.widget.Toolbar>

@@ -17,8 +17,12 @@
             app:cardCornerRadius="8dp"
             android:elevation="8dp"
             android:layout_margin="4dp">
+
+
                 <LinearLayout
-                    android:layout_marginTop="10dp"
+                    android:id="@+id/linear_layout_bottomsheet1"
+                    android:layout_marginTop="80dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -26,26 +30,22 @@
                             android:id="@+id/toolbar_price_condition"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/input_design3"
+                            android:background="@drawable/input_design"
                             app:menu="@menu/price">
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Price"/>
+                                    android:textStyle="bold"
+                                    android:textSize="18sp"
+                                    android:text="@string/price"/>
                         </androidx.appcompat.widget.Toolbar>
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_set_limit"
                             android:layout_width="wrap_content"
                             android:layout_height="55dp"
-                            android:background="@drawable/input_design3"
-                            android:text="Set limit"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="190dp">
+                            android:background="@drawable/input_design"
+                            android:text="@string/setlimit"/>
+
                         <androidx.cardview.widget.CardView
                             android:id="@+id/card_view_set_limit"
                             android:layout_width="wrap_content"
@@ -85,17 +85,22 @@
                 </LinearLayout>
 
 
-                <View
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="30dp"
-                    android:layout_height="5dp"
-                    android:background="@color/cinnabar"/>
+                <SearchView
+                    android:id="@+id/search_view_home_bottom_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:queryHint="@string/searchbylocation"
+                    android:iconifiedByDefault="false"
+                    android:layout_margin="10dp"
+                    android:elevation="5dp"
+                    android:background="@drawable/input_design"/>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="150dp"
                     android:id="@+id/recyclerViewBottomSheet"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    />
 
 
         </androidx.cardview.widget.CardView>

@@ -19,7 +19,8 @@
         android:title="Conatct Us" />
     <item
         android:id="@+id/action_bar_About_Signout"
-        android:icon="@drawable/ic_baseline_person_24"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
         app:showAsAction="always"
-        android:title="Signout" />
+        android:title="Exit" />
+
 </menu>

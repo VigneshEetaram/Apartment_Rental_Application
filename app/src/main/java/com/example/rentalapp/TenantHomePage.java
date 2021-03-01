@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
@@ -33,7 +34,18 @@ public class TenantHomePage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this,  R.id.fragment2);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         toolbar = findViewById(R.id.tenant_home_page_toolbar);
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TenantHomePage.this,TenantHomePage.class));
+                finish();
+            }
+        });
 
     }
 
@@ -87,7 +99,7 @@ public class TenantHomePage extends AppCompatActivity {
 
                 break;
             case R.id.action_bar_About_Signout:
-                FirebaseAuth.getInstance().signOut();
+                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
