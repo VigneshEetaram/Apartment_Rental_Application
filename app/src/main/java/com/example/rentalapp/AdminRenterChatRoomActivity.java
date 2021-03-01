@@ -3,6 +3,7 @@ package com.example.rentalapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
 import java.util.List;
 
 public class AdminRenterChatRoomActivity extends AppCompatActivity {
@@ -33,15 +35,23 @@ public class AdminRenterChatRoomActivity extends AppCompatActivity {
     RelativeLayout relativeLayout;
     RecyclerView chatRecyclerView;
     MessageAdapter chatRecyclerAdapter;
-    Button fab;
-    EditText edtmsg;
+    Toolbar toolbar;
 String tenantid,documentid,renter,chatid,chatroomname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_renter_chat_room);
-        fab = findViewById(R.id.fab2);
-        edtmsg = findViewById(R.id.input2);
+        toolbar = findViewById(R.id.admin_renter_chatroom_activity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminRenterChatRoomActivity.this,AdminRenterChtatroom.class));
+                finish();
+            }
+        });
         chatRecyclerView = findViewById(R.id.list_of_messages2);
         relativeLayout = findViewById(R.id.activity_main2);
         Intent intent = getIntent();
@@ -52,32 +62,6 @@ String tenantid,documentid,renter,chatid,chatroomname;
         chatroomname = intent.getExtras().getString("chatroomname");
         displayChatMessages();
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                        FirebaseAuth.getInstance().getCurrentUser().getUid(),renter);
-
-
-
-                db.collection("Chatroom").document(chatid).collection("chats")
-                        .add(chat)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                edtmsg.setText("");
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("FAILED", "Error adding document", e);
-                            }
-                        });
-            }
-        });
 
     }
 

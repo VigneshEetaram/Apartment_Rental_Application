@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private BottomSheetBehavior bottomSheetBehavior;
     FirebaseAuth fAuth;
     FloatingActionButton filter;
-    String userID, searchview;
+    String userID, searchview,rentername,tenantname;
     FirebaseFirestore db,db2;
     SearchView searchView;
     Boolean isClicked = false;
@@ -137,6 +137,33 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
                     @Override
                     protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
+
+                        DocumentReference documentReference4 = FirebaseFirestore.getInstance().collection("Renter").
+                                document(model.getRenterid());
+                        documentReference4.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                String firstname = documentSnapshot.getString("firstname");
+                                String secondname = documentSnapshot.getString("secondname");
+                                rentername = firstname+ " " +secondname;
+
+                            }
+                        });
+
+                        DocumentReference documentReference5 = FirebaseFirestore.getInstance().collection("Tenant").
+                                document(fAuth.getCurrentUser().getUid());
+                        documentReference5.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                String firstname = documentSnapshot.getString("firstname");
+                                String secondname = documentSnapshot.getString("secondname");
+                                tenantname = firstname+ " " +secondname;
+
+                            }
+                        });
+
 
                         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
                                 document(model.getDocumentid());
@@ -559,6 +586,34 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 holder.message.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        DocumentReference documentReference4 = FirebaseFirestore.getInstance().collection("Renter").
+                                document(model.getRenterid());
+                        documentReference4.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                String firstname = documentSnapshot.getString("firstname");
+                                String secondname = documentSnapshot.getString("secondname");
+                                rentername = firstname+ " " +secondname;
+
+                            }
+                        });
+
+                        DocumentReference documentReference5 = FirebaseFirestore.getInstance().collection("Tenant").
+                                document(fAuth.getCurrentUser().getUid());
+                        documentReference5.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                String firstname = documentSnapshot.getString("firstname");
+                                String secondname = documentSnapshot.getString("secondname");
+                                tenantname = firstname+ " " +secondname;
+
+                            }
+                        });
+
+
+
                         DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Chatroom").
                                 document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
                         documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -582,6 +637,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     userInfo.put("renterid", model.getRenterid());
                                     userInfo.put("chatid", FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
                                     userInfo.put("chatroomname", model.getStreetname());
+                                    userInfo.put("rentername", rentername);
+                                    userInfo.put("tenantname", tenantname);
                                     documentReference3.set(userInfo);
                                     Intent intent = new Intent(getActivity(), ChatroomActivity.class);
                                     intent.putExtra("tenantid",FirebaseAuth.getInstance().getUid());
@@ -589,6 +646,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("renter",model.getRenterid());
                                     intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
                                     intent.putExtra("chatroomname",model.getStreetname());
+                                    intent.putExtra("rentername",rentername);
+                                    intent.putExtra("tenantname",tenantname);
                                     startActivity(intent);
 
                                 }

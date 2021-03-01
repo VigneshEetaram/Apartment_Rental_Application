@@ -2,19 +2,21 @@ package com.example.rentalapp;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.Timestamp;
+
 import java.util.Date;
 
 public class ChatMessage {
 
     private String messageText;
     private String messageUser;
-    private long messageTime;
+    long messageTime;
     private String from;
     private String to;
 
-    public ChatMessage(String messageText, String from, String to) {
+    public ChatMessage(String messageText, String from, String to, long messageTime) {
         this.messageText = messageText;
-        this.messageTime = new Date().getTime();
+        this.messageTime = messageTime;
         this.from = from;
         this.to = to;
     }
@@ -43,14 +45,6 @@ public class ChatMessage {
         this.messageUser = messageUser;
     }
 
-    public long getMessageTime() {
-        return messageTime;
-    }
-
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
-    }
-
     public String getFrom() {
         return from;
     }
@@ -65,5 +59,13 @@ public class ChatMessage {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public long getMessageTime() {
+        return messageTime;
+    }
+
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
     }
 }

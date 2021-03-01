@@ -2,6 +2,7 @@ package com.example.rentalapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ public class AdminRenterChtatroom extends AppCompatActivity {
     private FirestoreRecyclerAdapter adapter;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,17 @@ public class AdminRenterChtatroom extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewadminrenterchatroom);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        toolbar = findViewById(R.id.admin_renter_chtatroom_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AdminRenterChtatroom.this,AdminHomePage.class));
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
 
@@ -54,9 +67,9 @@ public class AdminRenterChtatroom extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ChatUserModel model) {
 
-                holder.Chatroomname.setText(model.getChatroomname());
-                holder.renter.setText(model.getRenterid());
-                holder.tenant.setText(model.getTenantid());
+                holder.Chatroomname.setText("Chatroom Name: "+model.getChatroomname());
+                holder.renter.setText("Renter Name: "+model.getRentername());
+                holder.tenant.setText("Tenant Name: "+model.getTenantname());
 
 
                 holder.cardView.setOnClickListener(new View.OnClickListener() {

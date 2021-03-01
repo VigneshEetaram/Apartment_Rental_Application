@@ -65,7 +65,7 @@ public class ChatFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull User model) {
 
-                holder.Chatroomname.setText(model.getFirstname());
+                holder.Chatroomname.setText(model.getFirstname() + " " + model.getSecondname());
                 holder.Username.setText(model.getUserid());
 
 

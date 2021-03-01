@@ -76,7 +76,7 @@ public class ThirdFragment extends Fragment {
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ChatUserModel model) {
 
                 holder.Chatroom.setText(model.getChatroomname());
-                holder.Username.setText(model.getTenantid());
+                holder.Username.setText(model.getTenantname());
 
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
@@ -85,7 +85,10 @@ public class ThirdFragment extends Fragment {
                         intent.putExtra("documentid",model.getDocumentid());
                         intent.putExtra("renter",model.getRenterid());
                         intent.putExtra("chatid",model.getChatid());
+                        intent.putExtra("rentername",model.getRentername());
+                        intent.putExtra("tenantname",model.getTenantname());
                         intent.putExtra("chatroomname",model.getChatroomname());
+                        intent.putExtra("isuser","1");
                         startActivity(intent);
                     }
                 });

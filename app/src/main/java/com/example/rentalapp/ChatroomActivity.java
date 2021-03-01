@@ -3,6 +3,7 @@ package com.example.rentalapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,33 +28,58 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
 import java.util.List;
 
 public class ChatroomActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirestoreRecyclerAdapter adapter;
     RelativeLayout relativeLayout;
+    Toolbar toolbar;
     RecyclerView chatRecyclerView;
     MessageAdapter chatRecyclerAdapter;
     Button fab;
     EditText edtmsg;
+    TextView textView,chatroomtitle;
     ListView listView;
-    String tenantid,documentid,renter,chatid,chatroomname;
+    String tenantid,documentid,renter,chatid,chatroomname,rentername,tenantname,isuser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
+        toolbar = findViewById(R.id.chatroom_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         fab = findViewById(R.id.fab1);
         edtmsg = findViewById(R.id.input1);
         chatRecyclerView = findViewById(R.id.list_of_messages1);
         relativeLayout = findViewById(R.id.activity_main1);
+        textView = findViewById(R.id.txt_chatactivity_title);
+        chatroomtitle = findViewById(R.id.toolbar_chatroom_title);
         Intent intent = getIntent();
         tenantid = intent.getExtras().getString("tenantid");
         documentid = intent.getExtras().getString("documentid");
         renter = intent.getExtras().getString("renter");
         chatid = intent.getExtras().getString("chatid");
+        rentername = intent.getExtras().getString("rentername");
+        tenantname = intent.getExtras().getString("tenantname");
         chatroomname = intent.getExtras().getString("chatroomname");
-
+        isuser = intent.getExtras().getString("isuser");
+        if(isuser.equals("2")){
+            chatroomtitle.setText(rentername);
+        }
+        else if(isuser.equals("1")){
+            chatroomtitle.setText(tenantname);
+        }
+        textView.setText(chatroomname);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatroomActivity.this,TenantHomePage.class));
+                finish();
+            }
+        });
 
         displayChatMessages();
 
@@ -61,7 +88,7 @@ public class ChatroomActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                        FirebaseAuth.getInstance().getCurrentUser().getUid(),renter);
+                        FirebaseAuth.getInstance().getCurrentUser().getUid(),renter,new Date().getTime());
 
 
 
@@ -86,6 +113,7 @@ public class ChatroomActivity extends AppCompatActivity {
     }
 
     private void displayChatMessages() {
+
         Query query = FirebaseFirestore.getInstance().collection("Chatroom").document(chatid)
                 .collection("chats")
                 .orderBy("messageTime")
@@ -116,5 +144,6 @@ public class ChatroomActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
     }
 }

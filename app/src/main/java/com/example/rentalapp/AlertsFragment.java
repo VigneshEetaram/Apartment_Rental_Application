@@ -52,20 +52,20 @@ public class AlertsFragment extends Fragment {
                 .setQuery(query,ChatUserModel.class)
                 .build();
 
-        adapter = new FirestoreRecyclerAdapter<ChatUserModel, ThirdFragment.ItemViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<ChatUserModel, ItemViewHolder>(options) {
 
             @NonNull
             @Override
-            public ThirdFragment.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_user_chat_list_item,parent,false);
-                return new ThirdFragment.ItemViewHolder(v);
+                return new ItemViewHolder(v);
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull ThirdFragment.ItemViewHolder holder, int position, @NonNull ChatUserModel model) {
+            protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull ChatUserModel model) {
 
                 holder.Chatroom.setText(model.getChatroomname());
-                holder.Username.setText(model.getRenterid());
+                holder.Username.setText(model.getRentername());
 
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
@@ -74,7 +74,10 @@ public class AlertsFragment extends Fragment {
                         intent.putExtra("documentid",model.getDocumentid());
                         intent.putExtra("renter",model.getRenterid());
                         intent.putExtra("chatid",model.getChatid());
+                        intent.putExtra("rentername",model.getRentername());
+                        intent.putExtra("tenantname",model.getTenantname());
                         intent.putExtra("chatroomname",model.getChatroomname());
+                        intent.putExtra("isuser","2");
                         startActivity(intent);
                     }
                 });

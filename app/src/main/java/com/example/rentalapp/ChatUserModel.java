@@ -1,7 +1,7 @@
 package com.example.rentalapp;
 
 public class ChatUserModel {
-    String tenantid, documentid, renterid, chatid, chatroomname;
+    String tenantid, documentid, renterid, chatid, chatroomname,rentername,tenantname;
 
     public ChatUserModel() {
     }
@@ -44,5 +44,21 @@ public class ChatUserModel {
 
     public void setChatroomname(String chatroomname) {
         this.chatroomname = chatroomname;
+    }
+
+    public String getRentername() {
+        return rentername;
+    }
+
+    public void setRentername(String rentername) {
+        this.rentername = rentername;
+    }
+
+    public String getTenantname() {
+        return tenantname;
+    }
+
+    public void setTenantname(String tenantname) {
+        this.tenantname = tenantname;
     }
 }
