@@ -122,7 +122,7 @@ public class AllAdsFragment extends Fragment {
         TextView Description;
         TextView Place;
         ImageSlider Image;
-        String id;
+    //    String id;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);

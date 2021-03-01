@@ -2,8 +2,10 @@ package com.example.rentalapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         /**
          * take back to register page
          */
@@ -123,6 +128,52 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+
+
+        lForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText restmail = new EditText(v.getContext());
+                 AlertDialog.Builder passwordRestDialog = new AlertDialog.Builder(v.getContext());
+                passwordRestDialog.setTitle("Reset Password");
+                passwordRestDialog.setMessage("Enter your email to receive reset link" );
+                passwordRestDialog.setView(restmail);
+
+                passwordRestDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        String mail = restmail.getText().toString();
+
+                        lAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                                Toast.makeText(MainActivity.this, "Link is sent to your email", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(MainActivity.this, "Error!..Link is not sent", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+                    }
+                });
+
+                passwordRestDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                passwordRestDialog.create().show();
+            }
+        });
 
 
 
