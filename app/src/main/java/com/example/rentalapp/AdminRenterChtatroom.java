@@ -61,8 +61,12 @@ public class AdminRenterChtatroom extends AppCompatActivity {
 
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
-                        Intent intent = new Intent(getApplicationContext(), AdminRenterChtatroom.class);
-                        intent.putExtra("roomid",model.getChatid());
+                        Intent intent = new Intent(getApplicationContext(), AdminRenterChatRoomActivity.class);
+                        intent.putExtra("tenantid",model.getTenantid());
+                        intent.putExtra("documentid",model.getDocumentid());
+                        intent.putExtra("renterid",model.getRenterid());
+                        intent.putExtra("chatid",model.getChatid());
+                        intent.putExtra("chatroomname",model.getChatroomname());
                         startActivity(intent);
                     }
                 });

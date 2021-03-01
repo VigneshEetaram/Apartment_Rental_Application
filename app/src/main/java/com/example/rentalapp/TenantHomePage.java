@@ -6,6 +6,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -82,6 +83,7 @@ public class TenantHomePage extends AppCompatActivity {
                 recreate();
                 break;
             case R.id.action_bar_About_US:
+                startActivity(new Intent(TenantHomePage.this,ContactUs.class));
 
                 break;
             case R.id.action_bar_About_Signout:

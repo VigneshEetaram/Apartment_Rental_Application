@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class home2Fragment extends Fragment {
-    Button logout,announcement,userqueries,reports,chathistory;;
+    Button logout,announcement,reports,chathistory;;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,9 +21,16 @@ public class home2Fragment extends Fragment {
         View v =  inflater.inflate(R.layout.fragment_home2, container, false);
         logout = v.findViewById(R.id.btn_admin_logout);
         announcement = v.findViewById(R.id.btn_send_announcement);
-        userqueries = v.findViewById(R.id.btn_view_queries);
         reports = v.findViewById(R.id.btn_view_report);
         chathistory = v.findViewById(R.id.btn_view_chat_history);
+
+        reports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),ViewUserReports.class));
+
+            }
+        });
 
         announcement.setOnClickListener(new View.OnClickListener() {
             @Override

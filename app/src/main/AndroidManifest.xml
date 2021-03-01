@@ -16,7 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".AdminRenterChtatroom"></activity>
+        <activity android:name=".ContactUs"></activity>
+        <activity android:name=".ViewUserReports" />
+        <activity android:name=".AdminRenterChatRoomActivity" />
+        <activity android:name=".AdminRenterChtatroom" />
         <activity android:name=".ChatroomActivity" />
         <activity android:name=".ConnectActivity" />
         <activity android:name=".SendAnnouncements" />
