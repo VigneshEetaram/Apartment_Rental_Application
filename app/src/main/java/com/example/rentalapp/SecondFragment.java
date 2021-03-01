@@ -190,10 +190,10 @@ public class SecondFragment extends Fragment {
         doc.put("place", aplace);
         doc.put("type", atype);
         doc.put("description", adescription);
-        doc.put("count",counts);
+        doc.put("count",String.valueOf(counts));
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        img.put("count",counts);
+        img.put("count",String.valueOf(counts));
         img.put("userid",userID);
         for(int i =0;i<counts;i++){
             img.put("image"+i,downloadimageurls[i]);

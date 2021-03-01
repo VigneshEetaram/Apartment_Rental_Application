@@ -78,6 +78,11 @@ public class FavoritesFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
                 holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
+
+                    holder.Title.setText(model.getStreetname());
+                    holder.Price.setText(model.getPrice());
+                    holder.Description.setText(model.getDescription());
+
                 DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
                         document(model.getDocumentid());
                 documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -93,48 +98,47 @@ public class FavoritesFragment extends Fragment {
                     }
                 });
 
+                    holder.Favor.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                holder.Title.setText(model.getStreetname());
-                holder.Price.setText(model.getPrice());
-                holder.Description.setText(model.getDescription());
-
-                holder.Favor.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_shadow_24);
-                        DocumentReference eRef = db.collection("Favorites").document(userID).collection("Selected")
-                                .document(model.getDocumentid());
-                        eRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(task.isSuccessful()){
-                                    Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
+                            holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_shadow_24);
+                            DocumentReference eRef = db.collection("Favorites").document(userID).collection("Selected")
+                                    .document(model.getDocumentid());
+                            eRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                else{
-                                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                            });
 
-                    }
-                });
+                        }
+                    });
 
-                holder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
+                    holder.cardView.setOnClickListener(new View.OnClickListener() {
+                        @Override public void onClick(View view) {
+                            Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
 
-                        intent.putExtra("Price",model.getPrice());
-                        intent.putExtra("Title",model.getStreetname());
-                        intent.putExtra("UserID",userID);
-                        intent.putExtra("Place",model.getPlace());
-                        intent.putExtra("DocumentID",model.getDocumentid());
-                        intent.putExtra("Description",model.getDescription());
-                        startActivity(intent);
-                    }
-                });
+                            intent.putExtra("Price",model.getPrice());
+                            intent.putExtra("Title",model.getStreetname());
+                            intent.putExtra("UserID",userID);
+                            intent.putExtra("Place",model.getPlace());
+                            intent.putExtra("DocumentID",model.getDocumentid());
+                            intent.putExtra("Description",model.getDescription());
+                            startActivity(intent);
+                        }
+                    });
+
+
+
 
             }
+
         };
 
         recyclerView.setHasFixedSize(true);
