@@ -163,6 +163,13 @@ public class TenantApartmentDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,"Check out this place at the price "
+                                        + price + "\n located in " + place);
+
+                startActivity(Intent.createChooser(shareIntent,"Share to "));
+
             }
         });
 

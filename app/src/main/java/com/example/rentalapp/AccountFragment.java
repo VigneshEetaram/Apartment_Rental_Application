@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class AccountFragment extends Fragment {
     TextView changePassword, LogOut;
     ImageView edit;
     Button update;
-    private FirebaseFirestore firebaseFirestore;
+   // private FirebaseFirestore firebaseFirestore;
     FirebaseAuth fAuth;
     FirebaseFirestore db;
     String userID;
@@ -73,6 +74,8 @@ public class AccountFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+
+                Log.d("TAG","error " + e.getMessage());
 
             }
         });
