@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -94,7 +95,7 @@ public class AllAdsFragment extends Fragment {
 
 
 
-                holder.Image.setOnClickListener(new View.OnClickListener() {
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), ApartmentDetails.class);
                         intent.putExtra("Price",model.getPrice());
@@ -122,6 +123,7 @@ public class AllAdsFragment extends Fragment {
         TextView Description;
         TextView Place;
         ImageSlider Image;
+        CardView cardView;
     //    String id;
 
         public ItemViewHolder(@NonNull View itemView) {
@@ -131,6 +133,7 @@ public class AllAdsFragment extends Fragment {
             Name = itemView.findViewById(R.id.txt_title);
             Place = itemView.findViewById(R.id.txt_place);
             Description = itemView.findViewById(R.id.txt_description);
+            cardView = itemView.findViewById(R.id.cardView);
 
         }
     }
