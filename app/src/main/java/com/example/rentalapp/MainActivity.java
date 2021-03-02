@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
          * performing login activity
          */
 
-        if(valid){
+        //if(valid){
 
 
             lLogin.setOnClickListener(new View.OnClickListener() {
@@ -108,26 +108,29 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     checkField(lEmail);
                     checkField(lPassword);
-                    lAuth.signInWithEmailAndPassword(lEmail.getText().toString(),lPassword.getText().toString())
-                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    checkAccessLevel(authResult.getUser().getUid());
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG","Error Login "+ e.getMessage());
-                            Toast.makeText(MainActivity.this, "fail login", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
+                    if (valid) {
+                        lAuth.signInWithEmailAndPassword(lEmail.getText().toString(), lPassword.getText().toString())
+                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                    @Override
+                                    public void onSuccess(AuthResult authResult) {
+                                        checkAccessLevel(authResult.getUser().getUid());
+                                        finish();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("TAG", "Error Login " + e.getMessage());
+                                Toast.makeText(MainActivity.this, "fail login", Toast.LENGTH_SHORT).show();
 
+                            }
+                        });
+                    }
 
                 }
             });
 
-        }
+     //   }
 
 
         lForgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +223,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+                Log.d("Renter","fail " + e.getMessage());
+
             }
         });
 
@@ -237,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+                Log.d("Tenant","fail " + e.getMessage());
+
             }
         });
 
@@ -253,6 +260,8 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+
+                Log.d("Admin","fail " + e.getMessage());
 
             }
         });
