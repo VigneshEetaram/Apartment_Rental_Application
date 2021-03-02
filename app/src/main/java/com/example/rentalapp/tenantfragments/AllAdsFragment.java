@@ -134,7 +134,7 @@ public class AllAdsFragment extends Fragment {
             Name = itemView.findViewById(R.id.txt_title);
             Place = itemView.findViewById(R.id.txt_place);
             Description = itemView.findViewById(R.id.txt_description);
-            cardView = itemView.findViewById(R.id.cardView);
+            cardView = itemView.findViewById(R.id.cardViewallads);
 
         }
     }
