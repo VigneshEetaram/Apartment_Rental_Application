@@ -31,7 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Date;
 import java.util.List;
 
-public class ChatroomActivity extends AppCompatActivity {
+public class UserReportsChatsActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirestoreRecyclerAdapter adapter;
     RelativeLayout relativeLayout;
@@ -42,52 +42,29 @@ public class ChatroomActivity extends AppCompatActivity {
     EditText edtmsg;
     TextView textView,chatroomtitle;
     ListView listView;
-    String tenantid,documentid,renter,chatid,chatroomname,rentername,tenantname,isuser,activity;
+    String tenantid,rentername,tenantname,title,renterid,chatid,adminid;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatroom);
-        toolbar = findViewById(R.id.chatroom_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        setContentView(R.layout.activity_user_reports_chats);
 
-        fab = findViewById(R.id.fab1);
-        edtmsg = findViewById(R.id.input1);
-        chatRecyclerView = findViewById(R.id.list_of_messages1);
-        relativeLayout = findViewById(R.id.activity_main1);
-        textView = findViewById(R.id.txt_chatactivity_title);
-        chatroomtitle = findViewById(R.id.toolbar_chatroom_title);
+        fab = findViewById(R.id.fab5);
+        edtmsg = findViewById(R.id.input5);
+        chatRecyclerView = findViewById(R.id.list_of_messages5);
+        relativeLayout = findViewById(R.id.activity_main5);
+        textView = findViewById(R.id.txt_chat_user_report_title);
+        chatroomtitle = findViewById(R.id.toolbar_chat_user_report_title);
+
         Intent intent = getIntent();
         tenantid = intent.getExtras().getString("tenantid");
-        documentid = intent.getExtras().getString("documentid");
-        renter = intent.getExtras().getString("renter");
+        title = intent.getExtras().getString("title");
+        renterid = intent.getExtras().getString("renterid");
         chatid = intent.getExtras().getString("chatid");
         rentername = intent.getExtras().getString("rentername");
         tenantname = intent.getExtras().getString("tenantname");
-        chatroomname = intent.getExtras().getString("chatroomname");
-        isuser = intent.getExtras().getString("isuser");
-        activity = intent.getExtras().getString("activity");
-        if(isuser.equals("2")){
-            chatroomtitle.setText(rentername);
-        }
-        else if(isuser.equals("1")){
-            chatroomtitle.setText(tenantname);
-        }
-        textView.setText(chatroomname);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(activity.equals("third")){
-                    startActivity(new Intent(ChatroomActivity.this,RenterHomePage.class));
-                    finish();
-                }
-                else if(activity.equals("alerts")){
-                    startActivity(new Intent(ChatroomActivity.this,TenantHomePage.class));
-                    finish();
-                }
-
-            }
-        });
+        adminid = intent.getExtras().getString("adminid");
 
         displayChatMessages();
 
@@ -99,11 +76,11 @@ public class ChatroomActivity extends AppCompatActivity {
 
                     if(!message.equals("")){
                         ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid(),renter,new Date().getTime());
+                                FirebaseAuth.getInstance().getCurrentUser().getUid(),adminid,new Date().getTime());
 
 
 
-                        db.collection("Chatroom").document(chatid).collection("chats")
+                        db.collection("Adminchatroom").document(chatid).collection("chats")
                                 .add(chat)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
@@ -121,7 +98,7 @@ public class ChatroomActivity extends AppCompatActivity {
 
 
                 }
-                else if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(renter)){
+                else {
                     String message = edtmsg.getText().toString();
 
                     if(!message.equals("")){ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
@@ -129,7 +106,7 @@ public class ChatroomActivity extends AppCompatActivity {
 
 
 
-                        db.collection("Chatroom").document(chatid).collection("chats")
+                        db.collection("Adminchatroom").document(chatid).collection("chats")
                                 .add(chat)
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
@@ -177,7 +154,7 @@ public class ChatroomActivity extends AppCompatActivity {
                 // Update UI
                 chatRecyclerView.setHasFixedSize(true);
                 chatRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                chatRecyclerAdapter = new MessageAdapter(ChatroomActivity.this,chats);
+                chatRecyclerAdapter = new MessageAdapter(UserReportsChatsActivity.this,chats);
                 chatRecyclerView.setAdapter(chatRecyclerAdapter);
             }
         });

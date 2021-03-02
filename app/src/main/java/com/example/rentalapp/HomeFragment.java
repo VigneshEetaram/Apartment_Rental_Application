@@ -626,6 +626,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("renter",model.getRenterid());
                                     intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
                                     intent.putExtra("chatroomname",model.getStreetname());
+                                    intent.putExtra("isuser","2");
                                     startActivity(intent);
                                 }
                                 else{
@@ -648,6 +649,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("chatroomname",model.getStreetname());
                                     intent.putExtra("rentername",rentername);
                                     intent.putExtra("tenantname",tenantname);
+                                    intent.putExtra("isuser","2");
                                     startActivity(intent);
 
                                 }

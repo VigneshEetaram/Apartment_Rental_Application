@@ -5,17 +5,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/app_background"
     tools:context=".tenantfragments.AllAdsFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
             android:background="@drawable/app_background"/>
 
     </LinearLayout>

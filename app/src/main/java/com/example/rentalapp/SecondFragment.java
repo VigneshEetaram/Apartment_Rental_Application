@@ -59,7 +59,7 @@ public class SecondFragment extends Fragment {
     private static final int PICK_IMAGES_CODE = 0;
     int position =0;
     private StorageReference AptImagesRef;
-    private String[] downloadimageurls = new String[10];
+    private String downloadimageurls;
     int counts;
 
     @Override
@@ -79,7 +79,7 @@ public class SecondFragment extends Fragment {
         pd = new ProgressDialog(getContext());
         imageView = (ImageView) v.findViewById(R.id.imgSelect);
         ImageUris = new ArrayList<>();
-        AptImagesRef = FirebaseStorage.getInstance().getReference().child("Apartment Images");
+        AptImagesRef = FirebaseStorage.getInstance().getReference().child("ApartmentImages");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,11 +120,11 @@ public class SecondFragment extends Fragment {
 
         productRandomKey = saveCurrentDate + saveCurrentTime;
 
-        for(int i = 0; i<ImageUris.size(); i++){
 
-            final StorageReference filePath = AptImagesRef.child(ImageUris.get(i).getLastPathSegment() + productRandomKey + ".jpg");
-            final UploadTask uploadTask = filePath.putFile(ImageUris.get(i));
-            int finalI = i;
+
+            final StorageReference filePath = AptImagesRef.child(ImageUris.get(0).getLastPathSegment() + productRandomKey + ".jpg");
+            final UploadTask uploadTask = filePath.putFile(ImageUris.get(0));
+
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
@@ -144,7 +144,7 @@ public class SecondFragment extends Fragment {
                                 throw task.getException();
                             }
 
-                            downloadimageurls[finalI]= filePath.getDownloadUrl().toString();
+                            downloadimageurls= filePath.getDownloadUrl().toString();
                             return filePath.getDownloadUrl();
                         }
                     }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -152,17 +152,16 @@ public class SecondFragment extends Fragment {
                         public void onComplete(@NonNull Task<Uri> task) {
                             if (task.isSuccessful())
                             {
-                                downloadimageurls[finalI] = task.getResult().toString();
+                                downloadimageurls= task.getResult().toString();
 
                                 Toast.makeText(getContext(), "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
                                 uploadData(aname, aprice, aplace, adescription);
-
                             }
                         }
                     });
                 }
             });
-        }
+
 
 
     }
@@ -190,14 +189,12 @@ public class SecondFragment extends Fragment {
         doc.put("place", aplace);
         doc.put("type", atype);
         doc.put("description", adescription);
-        doc.put("count",String.valueOf(counts));
+        doc.put("count","1");
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        img.put("count",String.valueOf(counts));
+        img.put("count","1");
         img.put("userid",userID);
-        for(int i =0;i<counts;i++){
-            img.put("image"+i,downloadimageurls[i]);
-        }
+        img.put("image0",downloadimageurls);
 
 
         db.collection("Myads").document(userID).collection("Selected").document(id).set(doc)
@@ -248,22 +245,12 @@ public class SecondFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == gallerypic && resultCode == RESULT_OK){
-            if(data.getClipData()!=null){
 
-                int count = data.getClipData().getItemCount();
-                counts = count;
-                for(int i=0;i<count;i++){
-                    Uri imageuri = data.getClipData().getItemAt(i).getUri();
-                    ImageUris.add(imageuri);
-                }
-                imageView.setImageURI(ImageUris.get(0));
-            }
-            else{
                 Uri imageuri = data.getData();
                 ImageUris.add(imageuri);
                 imageView.setImageURI(ImageUris.get(0));
 
-            }
+
 
         }
     }

@@ -53,6 +53,16 @@
             android:paddingLeft="35dp"
             android:id="@+id/txt_view_user_reports_description"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_view_user_chat"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_gravity="right"
+                android:visibility="invisible"
+                android:background="@drawable/ic_baseline_chat_bubble_outline_24"/>
+
 
         </LinearLayout>
 

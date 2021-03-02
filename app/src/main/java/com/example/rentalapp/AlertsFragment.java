@@ -78,6 +78,7 @@ public class AlertsFragment extends Fragment {
                         intent.putExtra("tenantname",model.getTenantname());
                         intent.putExtra("chatroomname",model.getChatroomname());
                         intent.putExtra("isuser","2");
+                        intent.putExtra("activity","alerts");
                         startActivity(intent);
                     }
                 });

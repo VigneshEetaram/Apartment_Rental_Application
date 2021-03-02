@@ -89,6 +89,7 @@ public class ThirdFragment extends Fragment {
                         intent.putExtra("tenantname",model.getTenantname());
                         intent.putExtra("chatroomname",model.getChatroomname());
                         intent.putExtra("isuser","1");
+                        intent.putExtra("activity","third");
                         startActivity(intent);
                     }
                 });
