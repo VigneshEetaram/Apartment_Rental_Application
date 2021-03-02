@@ -64,6 +64,7 @@ public class TenantApartmentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_tenant_apartment_details);
 
         Image = (ImageSlider) findViewById(R.id.img_apt_details_tenant);
+
         Price= (TextView) findViewById(R.id.txt_view_price_tenant);
         Description= (TextView) findViewById(R.id.txt_view_description_tenant);
         Title = (TextView) findViewById(R.id.txt_view_title_tenant);

@@ -98,6 +98,7 @@ public class AllAdsFragment extends Fragment {
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), ApartmentDetails.class);
+                        intent.putExtra("Documentid",model.getDocumentid());
                         intent.putExtra("Price",model.getPrice());
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
@@ -122,8 +123,8 @@ public class AllAdsFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        CardView cardView;
         ImageSlider Image;
+        CardView cardView;
     //    String id;
 
         public ItemViewHolder(@NonNull View itemView) {
@@ -133,7 +134,7 @@ public class AllAdsFragment extends Fragment {
             Name = itemView.findViewById(R.id.txt_title);
             Place = itemView.findViewById(R.id.txt_place);
             Description = itemView.findViewById(R.id.txt_description);
-            cardView = itemView.findViewById(R.id.cardViewallads);
+            cardView = itemView.findViewById(R.id.cardView);
 
         }
     }
