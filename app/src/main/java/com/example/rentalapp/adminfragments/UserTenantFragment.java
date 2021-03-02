@@ -73,6 +73,7 @@ public class UserTenantFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String id = model.getUserid();
+
                         db.collection("Tenant").document(model.getUserid())
                                 .delete()
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

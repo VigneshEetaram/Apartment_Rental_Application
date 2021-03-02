@@ -171,12 +171,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                int count = Integer.valueOf(documentSnapshot.getString("count"));
-                                for (int i=0; i<count;i++){
-                                    slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
-                                }
-
-                                holder.imageSlider.setImageList(slideModels,true);
+                                Picasso.get().load(documentSnapshot.getString("image0")).into(holder.imageSlider);
                             }
                         });
 
@@ -304,7 +299,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull Model model) {
 
 
-                            holder.imageSlider.setImageList(slideModels,true);
+                            DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
+                                    document(model.getDocumentid());
+                            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                    Picasso.get().load(documentSnapshot.getString("image0")).into(holder.imageSlider);
+                                }
+                            });
 
                             holder.Title.setText(model.getStreetname());
                             holder.Price.setText(model.getPrice());
@@ -426,12 +429,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                                    int count = Integer.valueOf(documentSnapshot.getString("count"));
-                                    for (int i=0; i<count;i++){
-                                        slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
-                                    }
-
-                                    holder.imageSlider.setImageList(slideModels,true);
+                                    Picasso.get().load(documentSnapshot.getString("image0")).into(holder.imageSlider);
                                 }
                             });
 
@@ -572,12 +570,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        int count = Integer.valueOf(documentSnapshot.getString("count"));
-                        for (int i=0; i<count;i++){
-                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
-                        }
-
-                        holder.imageSlider.setImageList(slideModels,true);
+                        Picasso.get().load(documentSnapshot.getString("image0")).into(holder.imageSlider);
                     }
                 });
 
@@ -810,7 +803,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         TextView Description;
         TextView Place;
         Button Favor,message;
-        ImageSlider imageSlider;
+        ImageView imageSlider;
         CardView cardView;
 
         public ItemViewHolder(@NonNull View itemView) {

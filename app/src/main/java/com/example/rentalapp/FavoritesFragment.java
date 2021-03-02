@@ -89,12 +89,7 @@ public class FavoritesFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        int count = Integer.valueOf(documentSnapshot.getString("count"));
-                        for (int i=0; i<count;i++){
-                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
-                        }
-
-                        holder.Image.setImageList(slideModels,true);
+                        Picasso.get().load(documentSnapshot.getString("image0")).into(holder.Image);
                     }
                 });
 
@@ -233,7 +228,7 @@ public class FavoritesFragment extends Fragment {
         TextView Price;
         TextView Title;
         TextView Description;
-        ImageSlider Image;
+        ImageView Image;
         TextView Place;
         Button Favor,message;
         CardView cardView;
