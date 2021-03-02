@@ -98,6 +98,7 @@ public class AllAdsFragment extends Fragment {
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), ApartmentDetails.class);
+                        intent.putExtra("Documentid",model.getDocumentid());
                         intent.putExtra("Price",model.getPrice());
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
