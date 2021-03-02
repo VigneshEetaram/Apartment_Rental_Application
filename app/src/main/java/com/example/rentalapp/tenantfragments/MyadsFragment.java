@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -85,13 +86,7 @@ public class MyadsFragment extends Fragment {
                 documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                        int count = Integer.valueOf(documentSnapshot.getString("count"));
-                        for (int i=0; i<count;i++){
-                            slideModels.add(new SlideModel(documentSnapshot.getString("image"+i)));
-                        }
-
-                        holder.Image.setImageList(slideModels,true);
+                        Picasso.get().load(documentSnapshot.getString("image0")).into(holder.Image);
                     }
                 });
                 holder.Name.setText(model.getStreetname());
@@ -160,6 +155,18 @@ public class MyadsFragment extends Fragment {
                         startActivity(intent);
                     }
                 });
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
+                        intent.putExtra("Id",model.getDocumentid());
+                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Title",model.getStreetname());
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("Description",model.getDescription());
+                        intent.putExtra("Type", model.getType());
+                        startActivity(intent);
+                    }
+                });
 
             }
         };
@@ -177,9 +184,10 @@ public class MyadsFragment extends Fragment {
         TextView Name;
         TextView Description;
         TextView Place;
-        ImageSlider Image;
+        ImageView Image;
         String id;
         Toolbar toolbar;
+        CardView cardView;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -189,6 +197,7 @@ public class MyadsFragment extends Fragment {
             Description = itemView.findViewById(R.id.txt_descriptionmyads);
             toolbar = itemView.findViewById(R.id.toolbar_myads);
             Image = itemView.findViewById(R.id.Img_renter_apartment);
+            cardView = itemView.findViewById(R.id.cardview_renter_myad);
         }
     }
 

@@ -46,7 +46,7 @@ public class FavoritesFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirestoreRecyclerAdapter adapter;
     FirebaseAuth fAuth;
-    String userID;
+    String userID,rentername,tenantname;
     FirebaseFirestore db;
     private FirebaseAuth mAuth;
     List<SlideModel> slideModels = new ArrayList<>();
@@ -134,7 +134,85 @@ public class FavoritesFragment extends Fragment {
                         }
                     });
 
+                    holder.message.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            DocumentReference documentReference4 = FirebaseFirestore.getInstance().collection("Renter").
+                                    document(model.getRenterid());
+                            documentReference4.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
 
+                                    String firstname = documentSnapshot.getString("firstname");
+                                    String secondname = documentSnapshot.getString("secondname");
+                                    rentername = firstname+ " " +secondname;
+
+                                }
+                            });
+
+                            DocumentReference documentReference5 = FirebaseFirestore.getInstance().collection("Tenant").
+                                    document(fAuth.getCurrentUser().getUid());
+                            documentReference5.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                                    String firstname = documentSnapshot.getString("firstname");
+                                    String secondname = documentSnapshot.getString("secondname");
+                                    tenantname = firstname+ " " +secondname;
+
+                                }
+                            });
+
+
+
+                            DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Chatroom").
+                                    document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                            documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.getResult().exists()){
+                                        Intent intent = new Intent(getActivity(), ChatroomActivity.class);
+                                        intent.putExtra("tenantid",FirebaseAuth.getInstance().getUid());
+                                        intent.putExtra("documentid",model.getDocumentid());
+                                        intent.putExtra("renter",model.getRenterid());
+                                        intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                        intent.putExtra("chatroomname",model.getStreetname());
+                                        intent.putExtra("isuser","2");
+                                        startActivity(intent);
+                                    }
+                                    else{
+                                        DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Chatroom").
+                                                document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                        Map<String, Object> userInfo = new HashMap<>();
+                                        userInfo.put("tenantid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                        userInfo.put("documentid", model.getDocumentid());
+                                        userInfo.put("renterid", model.getRenterid());
+                                        userInfo.put("chatid", FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                        userInfo.put("chatroomname", model.getStreetname());
+                                        userInfo.put("rentername", rentername);
+                                        userInfo.put("tenantname", tenantname);
+                                        documentReference3.set(userInfo);
+                                        Intent intent = new Intent(getActivity(), ChatroomActivity.class);
+                                        intent.putExtra("tenantid",FirebaseAuth.getInstance().getUid());
+                                        intent.putExtra("documentid",model.getDocumentid());
+                                        intent.putExtra("renter",model.getRenterid());
+                                        intent.putExtra("chatid",FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getDocumentid());
+                                        intent.putExtra("chatroomname",model.getStreetname());
+                                        intent.putExtra("rentername",rentername);
+                                        intent.putExtra("tenantname",tenantname);
+                                        intent.putExtra("isuser","2");
+                                        startActivity(intent);
+
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                        }
+                    });
 
 
             }
@@ -157,7 +235,7 @@ public class FavoritesFragment extends Fragment {
         TextView Description;
         ImageSlider Image;
         TextView Place;
-        Button Favor;
+        Button Favor,message;
         CardView cardView;
 
         public ItemViewHolder(@NonNull View itemView) {
@@ -169,7 +247,7 @@ public class FavoritesFragment extends Fragment {
             Description=itemView.findViewById(R.id.txt_tenant_description);
             Favor = itemView.findViewById(R.id.btn_tenant_favor2);
             cardView = itemView.findViewById(R.id.card_view_tenant_recyclerview);
-
+            message = itemView.findViewById(R.id.btn_tenant_message2);
         }
     }
 

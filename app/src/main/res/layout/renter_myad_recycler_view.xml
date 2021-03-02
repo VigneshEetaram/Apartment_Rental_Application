@@ -29,15 +29,11 @@
             >
 
 
-            <com.denzcoskun.imageslider.ImageSlider
+            <ImageView
                 android:id="@+id/Img_renter_apartment"
                 android:layout_width="378dp"
                 android:layout_height="200dp"
-                android:scaleType="fitXY"
-                app:auto_cycle="false"
-                app:delay="0"
-                app:period="1000"
-                app:corner_radius="5"/>
+                android:scaleType="fitXY"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_myads"

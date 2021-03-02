@@ -215,6 +215,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 doc.put("description", model.getDescription());
                                                 doc.put("tenantid", userID);
                                                 doc.put("type", model.getType());
+                                                doc.put("renterid", model.getRenterid());
 
 
                                                 db.collection("Favorites").document(userID).collection("Selected").
@@ -338,6 +339,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                     doc.put("description", model.getDescription());
                                                     doc.put("tenantid", userID);
                                                     doc.put("type", model.getType());
+                                                    doc.put("renterid", model.getRenterid());
 
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -467,6 +469,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                     doc.put("description", model.getDescription());
                                                     doc.put("tenantid", userID);
                                                     doc.put("type", model.getType());
+                                                    doc.put("renterid", model.getRenterid());
                                                     db.collection("Favorites").document(userID).collection("Selected").
                                                             document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
@@ -686,6 +689,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                         doc.put("description", model.getDescription());
                                         doc.put("tenantid", userID);
                                         doc.put("type", model.getType());
+                                        doc.put("renterid", model.getRenterid());
                                         db.collection("Favorites").document(userID).collection("Selected").
                                                 document(model.getDocumentid()).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override

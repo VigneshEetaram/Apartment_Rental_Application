@@ -21,6 +21,9 @@ public class ContactUs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
+        Intent intent = getIntent();
+        // Picasso.get().load(intent.getStringExtra("Image")).into(Image);
+        String classid = intent.getExtras().getString("classid");
 
         toolbar = findViewById(R.id.toolbar_tenant_contact_us);
         setSupportActionBar(toolbar);
@@ -29,40 +32,13 @@ public class ContactUs extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ContactUs.this,TenantHomePage.class));
-                finish();
+                if(!classid.equals("renter")){startActivity(new Intent(ContactUs.this,TenantHomePage.class));
+                    finish();}
+                else{startActivity(new Intent(ContactUs.this,RenterHomePage.class));
+                    finish();}
+
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.actionbarmenu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_bar_EN:
-                translate("en");
-                lang = "en";
-                recreate();
-                break;
-            case R.id.action_bar_FR:
-                translate("fr");
-                lang = "fr";
-                recreate();
-                break;
-            case R.id.action_bar_About_US:
-                startActivity(new Intent(ContactUs.this,ContactUs.class));
-
-                break;
-            case R.id.action_bar_About_Signout:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void translate(String lang) {

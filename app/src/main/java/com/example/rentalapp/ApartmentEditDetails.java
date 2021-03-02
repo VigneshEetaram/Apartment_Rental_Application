@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class ApartmentEditDetails extends AppCompatActivity {
     ImageSlider image;
     Button btn_save;
     FirebaseAuth fAuth;
+    Toolbar toolbar;
     FirebaseFirestore db;
     String userID;
     int count;
@@ -74,6 +76,18 @@ public class ApartmentEditDetails extends AppCompatActivity {
         Title = (TextView) findViewById(R.id.txt_view_edit_title);
         Place = (TextView) findViewById(R.id.txt_view_edit_place);
         Type = (TextView) findViewById(R.id.txt_view_edit_type);
+
+        toolbar = findViewById(R.id.renter_apartment_edit_details_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ApartmentEditDetails.this, RenterHomePage.class));
+                finish();
+            }
+        });
         btn_save = (Button) findViewById(R.id.btn_apartment_edit_details);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

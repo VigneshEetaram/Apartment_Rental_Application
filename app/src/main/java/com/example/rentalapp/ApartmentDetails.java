@@ -54,7 +54,7 @@ public class ApartmentDetails extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ApartmentDetails.this, AllAdsFragment.class));
+                startActivity(new Intent(ApartmentDetails.this, RenterHomePage.class));
                 finish();
             }
         });
