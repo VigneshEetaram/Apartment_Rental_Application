@@ -20,16 +20,12 @@
             android:layout_height="wrap_content">
 
 
-            <com.denzcoskun.imageslider.ImageSlider
+            <ImageView
                 android:id="@+id/Img_admin_apartmentmyads"
                 android:layout_width="400dp"
                 android:layout_height="200dp"
                 android:adjustViewBounds="true"
-                android:background="#3a5ebf"
-                app:auto_cycle="false"
-                app:delay="0"
-                app:period="1000"
-                app:corner_radius="5"/>
+                android:background="#3a5ebf"/>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_admin_myads"
