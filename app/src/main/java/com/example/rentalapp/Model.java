@@ -2,8 +2,8 @@ package com.example.rentalapp;
 
 public class Model {
 
-    String description,documentid,email,place,price,renterid,streetname,type,count;
-
+    String description,documentid,email,place,renterid,streetname,type,count;
+    int price;
 
     public Model() {
     }
@@ -40,14 +40,6 @@ public class Model {
         this.place = place;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getRenterid() {
         return renterid;
     }
@@ -78,5 +70,13 @@ public class Model {
 
     public void setCount(String count) {
         this.count = count;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

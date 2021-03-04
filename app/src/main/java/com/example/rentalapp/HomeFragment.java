@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 String l2 =setlimit3000.getText().toString().trim();
 
 
-                Query query = firebaseFirestore.collection("Apartments").whereGreaterThan("price",l1).whereLessThan("price",l2);
+                Query query = firebaseFirestore.collection("Apartments").whereGreaterThan("price",Integer.valueOf(l1)).whereLessThan("price",Integer.valueOf(l2));
                 options = new FirestoreRecyclerOptions.Builder<Model>()
                         .setQuery(query,Model.class)
                         .build();
@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                         holder.Title.setText(model.getStreetname());
-                        holder.Price.setText(model.getPrice());
+                        holder.Price.setText(String.valueOf(model.getPrice()));
                         holder.Description.setText(model.getDescription());
 
                         holder.message.setOnClickListener(new View.OnClickListener() {
@@ -255,7 +255,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         holder.cardView.setOnClickListener(new View.OnClickListener() {
                             @Override public void onClick(View view) {
                                 Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
-                                intent.putExtra("Price",model.getPrice());
+                                intent.putExtra("Price",String.valueOf(model.getPrice()));
                                 intent.putExtra("Title",model.getStreetname());
                                 intent.putExtra("UserID",userID);
                                 intent.putExtra("Place",model.getPlace());
@@ -310,7 +310,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             });
 
                             holder.Title.setText(model.getStreetname());
-                            holder.Price.setText(model.getPrice());
+                            holder.Price.setText(String.valueOf(model.getPrice()));
                             holder.Description.setText(model.getDescription());
 
                             holder.message.setOnClickListener(new View.OnClickListener() {
@@ -387,7 +387,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 @Override public void onClick(View view) {
                                     Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
                                     intent.putExtra("DocumentID",model.getDocumentid());
-                                    intent.putExtra("Price",model.getPrice());
+                                    intent.putExtra("Price",String.valueOf(model.getPrice()));
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
                                     intent.putExtra("Place",model.getPlace());
@@ -435,7 +435,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                             holder.Title.setText(model.getStreetname());
-                            holder.Price.setText(model.getPrice());
+                            holder.Price.setText(String.valueOf(model.getPrice()));
                             holder.Description.setText(model.getDescription());
 
                             holder.message.setOnClickListener(new View.OnClickListener() {
@@ -510,7 +510,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             holder.cardView.setOnClickListener(new View.OnClickListener() {
                                 @Override public void onClick(View view) {
                                     Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
-                                    intent.putExtra("Price",model.getPrice());
+                                    intent.putExtra("Price",String.valueOf(model.getPrice()));
                                     intent.putExtra("Title",model.getStreetname());
                                     intent.putExtra("UserID",userID);
                                     intent.putExtra("DocumentID",model.getDocumentid());
@@ -576,7 +576,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                 holder.Title.setText(model.getStreetname());
-                holder.Price.setText(model.getPrice());
+                holder.Price.setText(String.valueOf(model.getPrice()));
                 holder.Description.setText(model.getDescription());
 
                 holder.message.setOnClickListener(new View.OnClickListener() {
@@ -725,7 +725,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(),TenantApartmentDetails.class);
-                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Price",String.valueOf(model.getPrice()));
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("UserID",userID);
                         intent.putExtra("DocumentID",model.getDocumentid());

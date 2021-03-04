@@ -90,7 +90,7 @@ public class MyadsFragment extends Fragment {
                     }
                 });
                 holder.Name.setText(model.getStreetname());
-                holder.Price.setText(model.getPrice());
+                holder.Price.setText(String.valueOf(model.getPrice()));
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
                 String docid = model.getDocumentid();
@@ -102,7 +102,7 @@ public class MyadsFragment extends Fragment {
                         if (id == R.id.edit){
                             Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
                             intent.putExtra("Id",model.getDocumentid());
-                            intent.putExtra("Price",model.getPrice());
+                            intent.putExtra("Price",String.valueOf(model.getPrice()));
                             intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
@@ -116,7 +116,6 @@ public class MyadsFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
                                         Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
@@ -129,7 +128,6 @@ public class MyadsFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(getContext(), "removed", Toast.LENGTH_SHORT).show();
                                     }
                                     else{
                                         Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
@@ -147,7 +145,7 @@ public class MyadsFragment extends Fragment {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
                         intent.putExtra("Id",model.getDocumentid());
-                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Price",String.valueOf(model.getPrice()));
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
@@ -159,7 +157,7 @@ public class MyadsFragment extends Fragment {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
                         intent.putExtra("Id",model.getDocumentid());
-                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Price",String.valueOf(model.getPrice()));
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());

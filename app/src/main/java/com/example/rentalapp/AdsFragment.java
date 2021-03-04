@@ -82,7 +82,7 @@ public class AdsFragment extends Fragment {
                 });
 
                 holder.Name.setText(model.getStreetname());
-                holder.Price.setText(model.getPrice());
+                holder.Price.setText(String.valueOf(model.getPrice()));
                 holder.Description.setText(model.getDescription());
                 holder.Place.setText(model.getPlace());
                 String docid = model.getDocumentid();
@@ -94,7 +94,7 @@ public class AdsFragment extends Fragment {
                         if (id == R.id.edit){
                             Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
                             intent.putExtra("Id",model.getDocumentid());
-                            intent.putExtra("Price",model.getPrice());
+                            intent.putExtra("Price",String.valueOf(model.getPrice()));
                             intent.putExtra("Title",model.getStreetname());
                             intent.putExtra("Place",model.getPlace());
                             intent.putExtra("Description",model.getDescription());
@@ -136,7 +136,7 @@ public class AdsFragment extends Fragment {
                     @Override public void onClick(View view) {
                         Intent intent = new Intent(getContext(), ApartmentDetails.class);
                         intent.putExtra("Id",model.getDocumentid());
-                        intent.putExtra("Price",model.getPrice());
+                        intent.putExtra("Price",String.valueOf(model.getPrice()));
                         intent.putExtra("Title",model.getStreetname());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());

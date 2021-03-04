@@ -66,7 +66,7 @@ public class ChatFragment extends Fragment {
             protected void onBindViewHolder(@NonNull ItemViewHolder holder, int position, @NonNull User model) {
 
                 holder.Chatroomname.setText(model.getFirstname() + " " + model.getSecondname());
-                holder.Username.setText(model.getUserid());
+                holder.Username.setText(model.getEmail());
 
 
                 holder.cardView.setOnClickListener(new View.OnClickListener() {
