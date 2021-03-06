@@ -80,7 +80,7 @@ public class FavoritesFragment extends Fragment {
                 holder.Favor.setBackgroundResource(R.drawable.ic_baseline_favorite_24);
 
                     holder.Title.setText(model.getStreetname());
-                    holder.Price.setText(model.getPrice());
+                    holder.Price.setText(String.valueOf(model.getPrice())+" CAD");
                     holder.Description.setText(model.getDescription());
 
                 DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").

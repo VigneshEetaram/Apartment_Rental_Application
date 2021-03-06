@@ -177,7 +177,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                         holder.Title.setText(model.getStreetname());
-                        holder.Price.setText(String.valueOf(model.getPrice()));
+                        holder.Price.setText(String.valueOf(model.getPrice())+" CAD");
                         holder.Description.setText(model.getDescription());
 
                         holder.message.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +205,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                                 doc.put("documentid", model.getDocumentid());
                                                 doc.put("email", model.getEmail());
                                                 doc.put("streetname", model.getStreetname());
-                                                doc.put("price", model.getPrice());
+                                                doc.put("price", String.valueOf(model.getPrice()));
                                                 doc.put("place", model.getPlace());
                                                 doc.put("description", model.getDescription());
                                                 doc.put("tenantid", userID);
@@ -310,7 +310,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             });
 
                             holder.Title.setText(model.getStreetname());
-                            holder.Price.setText(String.valueOf(model.getPrice()));
+                            holder.Price.setText(String.valueOf(model.getPrice())+" CAD");
                             holder.Description.setText(model.getDescription());
 
                             holder.message.setOnClickListener(new View.OnClickListener() {
@@ -435,7 +435,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                             holder.Title.setText(model.getStreetname());
-                            holder.Price.setText(String.valueOf(model.getPrice()));
+                            holder.Price.setText(String.valueOf(model.getPrice())+" CAD");
                             holder.Description.setText(model.getDescription());
 
                             holder.message.setOnClickListener(new View.OnClickListener() {
@@ -576,7 +576,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
 
                 holder.Title.setText(model.getStreetname());
-                holder.Price.setText(String.valueOf(model.getPrice()));
+                holder.Price.setText(String.valueOf(model.getPrice())+" CAD");
                 holder.Description.setText(model.getDescription());
 
                 holder.message.setOnClickListener(new View.OnClickListener() {
