@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/aclonica"
-        android:text="Apartment Rentals"
+        android:text="Bonjour!             Apartment Rentals"
         android:textColor="@color/navyBlueDark"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
