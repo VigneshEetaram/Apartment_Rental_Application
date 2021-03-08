@@ -98,7 +98,11 @@ public class TenantHomePage extends AppCompatActivity {
                 Intent intent = new Intent(TenantHomePage.this,ContactUs.class);
                 intent.putExtra("classid","tenant");
                 startActivity(intent);
-
+                break;
+            case R.id.action_bar_notification1:
+                Intent intent2 = new Intent(TenantHomePage.this,notificationActivity.class);
+                intent2.putExtra("classid","tenant");
+                startActivity(intent2);
                 break;
             case R.id.action_bar_About_Signout:
                 finish();

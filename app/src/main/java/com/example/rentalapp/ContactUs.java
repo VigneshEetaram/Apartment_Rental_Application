@@ -22,7 +22,6 @@ public class ContactUs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_us);
         Intent intent = getIntent();
-        // Picasso.get().load(intent.getStringExtra("Image")).into(Image);
         String classid = intent.getExtras().getString("classid");
 
         toolbar = findViewById(R.id.toolbar_tenant_contact_us);

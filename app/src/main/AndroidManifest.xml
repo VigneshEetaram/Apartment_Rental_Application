@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".UserReportsChatsActivity"></activity>
+        <activity android:name=".notificationActivity"></activity>
+        <activity android:name=".UserReportsChatsActivity" />
         <activity android:name=".ContactUs" />
         <activity android:name=".ViewUserReports" />
         <activity android:name=".AdminRenterChatRoomActivity" />
