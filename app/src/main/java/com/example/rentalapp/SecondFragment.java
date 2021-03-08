@@ -98,34 +98,6 @@ public class SecondFragment extends Fragment {
                 atype = type.getText().toString().trim();
                 email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-                if(aname.isEmpty()){
-                    name.setError("Title is required");
-                    name.requestFocus();
-                    return;
-                }
-
-                if(aprice.isEmpty()){
-                    price.setError("Price is required");
-                    price.requestFocus();
-                    return;
-                }
-
-                if(aplace.isEmpty()){
-                    place.setError("Place is required");
-                    place.requestFocus();
-                    return;
-                }
-                if(adescription.isEmpty()){
-                    description.setError("Description is required");
-                    description.requestFocus();
-                    return;
-                }
-                if(atype.isEmpty()){
-                    type.setError("Type is required");
-                    type.requestFocus();
-                    return;
-                }
-
                 if(ImageUris == null){
                     Toast.makeText(getContext(), "Image is mandatory.", Toast.LENGTH_SHORT).show();
                     imageView.requestFocus();
@@ -162,7 +134,6 @@ public class SecondFragment extends Fragment {
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(), "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
 
                     Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -182,7 +153,6 @@ public class SecondFragment extends Fragment {
                             {
                                 downloadimageurls= task.getResult().toString();
 
-                                Toast.makeText(getContext(), "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
                                 uploadData(aname, aprice, aplace, adescription);
                             }
                         }
@@ -203,8 +173,6 @@ public class SecondFragment extends Fragment {
     }
 
     private void uploadData(String aname, String aprice, String aplace, String adescription) {
-        pd.setTitle("Adding data to firestore");
-        pd.show();
 
         String id = UUID.randomUUID().toString();
         Map<String, Object> doc = new HashMap<>();
@@ -213,8 +181,8 @@ public class SecondFragment extends Fragment {
         doc.put("renterid", FirebaseAuth.getInstance().getCurrentUser().getUid());
         doc.put("email", email);
         doc.put("streetname", aname);
-        doc.put("price", aprice);
-        doc.put("place", Integer.valueOf(aplace));
+        doc.put("price", Integer.parseInt(aprice));
+        doc.put("place", aplace);
         doc.put("type", atype);
         doc.put("description", adescription);
         doc.put("count","1");
@@ -229,14 +197,11 @@ public class SecondFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        pd.dismiss();
-                        Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -245,7 +210,6 @@ public class SecondFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 pd.dismiss();
-                Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
