@@ -3,12 +3,14 @@ package com.example.rentalapp;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    Toolbar toolbar;
     private GoogleMap mMap;
     MapView mapView;
     String address;
@@ -43,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapView.getMapAsync(this);
         Intent intent = getIntent();
         address = intent.getExtras().getString("Address");
+
 
     }
 

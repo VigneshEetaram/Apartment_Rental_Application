@@ -209,13 +209,11 @@ public class SecondFragment extends Fragment {
         db.collection("Apartments").document(id).set(doc).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                pd.dismiss();
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -223,7 +221,7 @@ public class SecondFragment extends Fragment {
         db.collection("ApartmentImages").document(id).set(img).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
+                startActivity(new Intent(getContext(),RenterHomePage.class));
             }
         });
     }
