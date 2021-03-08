@@ -98,6 +98,34 @@ public class SecondFragment extends Fragment {
                 atype = type.getText().toString().trim();
                 email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
+                if(aname.isEmpty()){
+                    name.setError("Title is required");
+                    name.requestFocus();
+                    return;
+                }
+
+                if(aprice.isEmpty()){
+                    price.setError("Price is required");
+                    price.requestFocus();
+                    return;
+                }
+
+                if(aplace.isEmpty()){
+                    place.setError("Place is required");
+                    place.requestFocus();
+                    return;
+                }
+                if(adescription.isEmpty()){
+                    description.setError("Description is required");
+                    description.requestFocus();
+                    return;
+                }
+                if(atype.isEmpty()){
+                    type.setError("Type is required");
+                    type.requestFocus();
+                    return;
+                }
+
                 if(ImageUris == null){
                     Toast.makeText(getContext(), "Image is mandatory.", Toast.LENGTH_SHORT).show();
                     imageView.requestFocus();
@@ -186,7 +214,7 @@ public class SecondFragment extends Fragment {
         doc.put("email", email);
         doc.put("streetname", aname);
         doc.put("price", aprice);
-        doc.put("place", aplace);
+        doc.put("place", Integer.valueOf(aplace));
         doc.put("type", atype);
         doc.put("description", adescription);
         doc.put("count","1");

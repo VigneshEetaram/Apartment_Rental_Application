@@ -17,6 +17,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,8 +35,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChatroomActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,7 +53,10 @@ public class ChatroomActivity extends AppCompatActivity {
     Button fab;
     EditText edtmsg;
     TextView textView,chatroomtitle;
+    RequestQueue mQueue;
     ListView listView;
+    public static boolean isOpen = true;
+    public static final String URL = "https://fcm.googleapis.com/fcm/send";
     String tenantid,documentid,renter,chatid,chatroomname,rentername,tenantname,isuser,activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +65,14 @@ public class ChatroomActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.chatroom_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        isOpen = true;
         fab = findViewById(R.id.fab1);
         edtmsg = findViewById(R.id.input1);
         chatRecyclerView = findViewById(R.id.list_of_messages1);
         relativeLayout = findViewById(R.id.activity_main1);
         textView = findViewById(R.id.txt_chatactivity_title);
         chatroomtitle = findViewById(R.id.toolbar_chatroom_title);
+        mQueue = Volley.newRequestQueue(this);
         Intent intent = getIntent();
         tenantid = intent.getExtras().getString("tenantid");
         documentid = intent.getExtras().getString("documentid");
@@ -108,6 +124,20 @@ public class ChatroomActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
+                                        JSONObject object = new JSONObject();
+                                        JSONObject innerObject = new JSONObject();
+                                        try {
+                                            innerObject.put("user_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            innerObject.put("user",tenantname);
+                                            innerObject.put("message",message);
+                                            innerObject.put("sender_fcm",tenantid);
+                                            object.put("data",innerObject);
+                                            object.put("to",renter);
+                                            sendPushNotification(object);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                         Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
                                         edtmsg.setText("");
                                     }
@@ -134,6 +164,20 @@ public class ChatroomActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
+                                        JSONObject object = new JSONObject();
+                                        JSONObject innerObject = new JSONObject();
+                                        try {
+                                            innerObject.put("user_id",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            innerObject.put("user",rentername);
+                                            innerObject.put("message",message);
+                                            innerObject.put("sender_fcm",renter);
+                                            object.put("data",innerObject);
+                                            object.put("to",tenantid);
+                                            sendPushNotification(object);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                         Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
                                         edtmsg.setText("");
                                     }
@@ -188,4 +232,41 @@ public class ChatroomActivity extends AppCompatActivity {
         super.onStart();
 
     }
+
+    private void sendPushNotification(JSONObject object) {
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, URL, object, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String ,String> map = new HashMap<>();
+                map.put("authorization","key=AAAAr7pw2Rs:APA91bEkz861nGQa5ewarjz94ON_NxXnQ8vDkYIG7zZJs8aKt3y6kq15L3J5r07b2pjpF60eNtEG12VBSeNgqVSGLrB8LeZXwsX-XjWe_rLfabL3FFSL1l2bQ17fK0Zsx1yG-_3vJP82");
+                map.put("Content-Type","application/json");
+                return map;
+            }
+        };
+        mQueue.add(objectRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isOpen = false;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOpen = false;
+    }
+
 }
