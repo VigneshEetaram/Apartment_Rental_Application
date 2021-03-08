@@ -41,11 +41,11 @@ public class AdminMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder.getItemViewType()==0){
             SenderViewHolder senderViewHolder = (SenderViewHolder) holder;
-            senderViewHolder.mText.setText(chats.get(position).getMessageText());
+            senderViewHolder.mText.setText(chats.get(position).getTenantName() +"\n" + chats.get(position).getMessageText());
         }
         if(holder.getItemViewType()==1){
             ReceiverViewHolder receiverViewHolder = (ReceiverViewHolder) holder;
-            receiverViewHolder.mText.setText(chats.get(position).getMessageText());
+            receiverViewHolder.mText.setText(chats.get(position).getRenterName() +"\n" + chats.get(position).getMessageText());
         }
 
     }
@@ -58,7 +58,7 @@ public class AdminMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
 
-        if(chats.get(position).getFrom().equals(mAuth.getCurrentUser().getUid())){
+        if(chats.get(position).getIsRenter().equals("1")){
             return 1;
         }
         return 0;

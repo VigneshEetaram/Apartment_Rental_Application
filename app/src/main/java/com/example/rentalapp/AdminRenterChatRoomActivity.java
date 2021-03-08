@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +37,7 @@ public class AdminRenterChatRoomActivity extends AppCompatActivity {
     RecyclerView chatRecyclerView;
     AdminMessageAdapter chatRecyclerAdapter;
     Toolbar toolbar;
+    TextView chatroomtitle;
 String tenantid,documentid,renter,chatid,chatroomname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +56,14 @@ String tenantid,documentid,renter,chatid,chatroomname;
         });
         chatRecyclerView = findViewById(R.id.list_of_messages2);
         relativeLayout = findViewById(R.id.activity_main2);
+        chatroomtitle = findViewById(R.id.txt_chatactivity_title2);
         Intent intent = getIntent();
         tenantid = intent.getExtras().getString("tenantid");
         documentid = intent.getExtras().getString("documentid");
         renter = intent.getExtras().getString("renter");
         chatid = intent.getExtras().getString("chatid");
         chatroomname = intent.getExtras().getString("chatroomname");
+        chatroomtitle.setText(chatroomname);
         displayChatMessages();
 
 

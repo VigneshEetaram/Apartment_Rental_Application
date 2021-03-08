@@ -115,7 +115,7 @@ public class ChatroomActivity extends AppCompatActivity {
 
                     if(!message.equals("")){
                         ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid(),renter,new Date().getTime());
+                            FirebaseAuth.getInstance().getCurrentUser().getUid(),renter,new Date().getTime(),"1","0",tenantname,rentername);
 
 
 
@@ -155,7 +155,7 @@ public class ChatroomActivity extends AppCompatActivity {
                     String message = edtmsg.getText().toString();
 
                     if(!message.equals("")){ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid(),tenantid,new Date().getTime());
+                            FirebaseAuth.getInstance().getCurrentUser().getUid(),tenantid,new Date().getTime(),"0","1",tenantname,rentername);
 
 
 

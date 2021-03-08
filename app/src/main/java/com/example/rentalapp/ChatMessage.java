@@ -13,16 +13,56 @@ public class ChatMessage {
     long messageTime;
     private String from;
     private String to;
+    private String isTenant;
+    private String isRenter;
+    private String renterName;
+    private String tenantName;
 
-    public ChatMessage(String messageText, String from, String to, long messageTime) {
+    public ChatMessage(String messageText, String from, String to, long messageTime, String isTenant, String isRenter, String tenantName, String renterName) {
         this.messageText = messageText;
         this.messageTime = messageTime;
         this.from = from;
         this.to = to;
+        this.isRenter = isRenter;
+        this.isTenant = isTenant;
+        this.renterName = renterName;
+        this.tenantName = tenantName;
     }
 
     public ChatMessage(){
 
+    }
+
+    public String getRenterName() {
+        return renterName;
+    }
+
+    public void setRenterName(String renterName) {
+        this.renterName = renterName;
+    }
+
+    public String getTenantName() {
+        return tenantName;
+    }
+
+    public void setTenantName(String tenantName) {
+        this.tenantName = tenantName;
+    }
+
+    public String getIsTenant() {
+        return isTenant;
+    }
+
+    public void setIsTenant(String isTenant) {
+        this.isTenant = isTenant;
+    }
+
+    public String getIsRenter() {
+        return isRenter;
+    }
+
+    public void setIsRenter(String isRenter) {
+        this.isRenter = isRenter;
     }
 
     public ChatMessage(String from) {

@@ -71,59 +71,7 @@ public class UserReportsChatsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(tenantid)){
-                    String message = edtmsg.getText().toString();
 
-                    if(!message.equals("")){
-                        ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                                FirebaseAuth.getInstance().getCurrentUser().getUid(),adminid,new Date().getTime());
-
-
-
-                        db.collection("Adminchatroom").document(chatid).collection("chats")
-                                .add(chat)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        edtmsg.setText("");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("FAILED", "Error adding document", e);
-                                    }
-                                });}
-
-
-                }
-                else {
-                    String message = edtmsg.getText().toString();
-
-                    if(!message.equals("")){ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
-                            FirebaseAuth.getInstance().getCurrentUser().getUid(),tenantid,new Date().getTime());
-
-
-
-                        db.collection("Adminchatroom").document(chatid).collection("chats")
-                                .add(chat)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        edtmsg.setText("");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w("FAILED", "Error adding document", e);
-                                    }
-                                });
-                    }
-
-                }
 
 
             }
