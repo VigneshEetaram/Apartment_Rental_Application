@@ -81,13 +81,7 @@ public class ApartmentEditDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ApartmentEditDetails.this, RenterHomePage.class));
-                finish();
-            }
-        });
+
         btn_save = (Button) findViewById(R.id.btn_apartment_edit_details);
         fAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -95,6 +89,17 @@ public class ApartmentEditDetails extends AppCompatActivity {
         Intent intent = getIntent();
 
         id = intent.getExtras().getString("Id");
+        String classid = intent.getExtras().getString("classid");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!classid.equals("renter")){startActivity(new Intent(ApartmentEditDetails.this,AdminHomePage.class));
+                    finish();}
+                else{startActivity(new Intent(ApartmentEditDetails.this,RenterHomePage.class));
+                    finish();}
+            }
+        });
 
         DocumentReference documentReference = FirebaseFirestore.getInstance().collection("ApartmentImages").
                 document(id);

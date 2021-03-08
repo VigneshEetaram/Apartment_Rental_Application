@@ -34,7 +34,7 @@ public class AdminRenterChatRoomActivity extends AppCompatActivity {
     private FirestoreRecyclerAdapter adapter;
     RelativeLayout relativeLayout;
     RecyclerView chatRecyclerView;
-    MessageAdapter chatRecyclerAdapter;
+    AdminMessageAdapter chatRecyclerAdapter;
     Toolbar toolbar;
 String tenantid,documentid,renter,chatid,chatroomname;
     @Override
@@ -87,7 +87,7 @@ String tenantid,documentid,renter,chatid,chatroomname;
                 // Update UI
                 chatRecyclerView.setHasFixedSize(true);
                 chatRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                chatRecyclerAdapter = new MessageAdapter(AdminRenterChatRoomActivity.this,chats);
+                chatRecyclerAdapter = new AdminMessageAdapter(AdminRenterChatRoomActivity.this,chats);
                 chatRecyclerView.setAdapter(chatRecyclerAdapter);
             }
         });

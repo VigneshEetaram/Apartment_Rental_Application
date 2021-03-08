@@ -45,7 +45,7 @@ public class notificationActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String classid = intent.getExtras().getString("classid");
         recyclerView = findViewById(R.id.recyclerView_notification);
-        toolbar = findViewById(R.id.toolbar_tenant_contact_us);
+        toolbar = findViewById(R.id.toolbar_tenant_notification);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

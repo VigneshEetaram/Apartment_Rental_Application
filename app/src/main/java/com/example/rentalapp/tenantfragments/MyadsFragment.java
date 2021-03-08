@@ -162,6 +162,7 @@ public class MyadsFragment extends Fragment {
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
                         intent.putExtra("Type", model.getType());
+                        intent.putExtra("classid","renter");
                         startActivity(intent);
                     }
                 });

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -144,6 +145,20 @@ public class AdsFragment extends Fragment {
                     }
                 });
 
+                holder.cardview.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ApartmentEditDetails.class);
+                        intent.putExtra("Id",model.getDocumentid());
+                        intent.putExtra("Price",String.valueOf(model.getPrice()));
+                        intent.putExtra("Title",model.getStreetname());
+                        intent.putExtra("Place",model.getPlace());
+                        intent.putExtra("Description",model.getDescription());
+                        intent.putExtra("Type", model.getType());
+                        intent.putExtra("classid","admin");
+                        startActivity(intent);
+                    }
+                });
+
             }
         };
 
@@ -163,9 +178,11 @@ public class AdsFragment extends Fragment {
         ImageView Image;
         String id;
         Toolbar toolbar;
+        CardView cardview;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardview = itemView.findViewById(R.id.cardViewadmin);
             Price = itemView.findViewById(R.id.txt_admin_pricemyads);
             Image = itemView.findViewById(R.id.Img_admin_apartmentmyads);
             Name = itemView.findViewById(R.id.txt_admin_titlemyads);
