@@ -218,7 +218,6 @@ public class TenantApartmentDetails extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(TenantApartmentDetails.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -230,7 +229,6 @@ public class TenantApartmentDetails extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(TenantApartmentDetails.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
