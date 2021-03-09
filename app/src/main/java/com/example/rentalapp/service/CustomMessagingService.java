@@ -19,9 +19,7 @@ import java.util.Map;
 
 import static com.example.rentalapp.ChatroomActivity.isOpen;
 
-/**
- * Created by kharag on 20-05-2020.
- */
+
 public class CustomMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {

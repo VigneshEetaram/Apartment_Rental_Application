@@ -261,6 +261,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                 intent.putExtra("Place",model.getPlace());
                                 intent.putExtra("DocumentID",model.getDocumentid());
                                 intent.putExtra("Description",model.getDescription());
+                                intent.putExtra("RenterID",model.getRenterid());
                                 startActivity(intent);
                             }
                         });
@@ -392,6 +393,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("UserID",userID);
                                     intent.putExtra("Place",model.getPlace());
                                     intent.putExtra("Description",model.getDescription());
+                                    intent.putExtra("RenterID",model.getRenterid());
                                     startActivity(intent);
                                 }
                             });
@@ -516,6 +518,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                                     intent.putExtra("DocumentID",model.getDocumentid());
                                     intent.putExtra("Place",model.getPlace());
                                     intent.putExtra("Description",model.getDescription());
+                                    intent.putExtra("RenterID",model.getRenterid());
                                     startActivity(intent);
                                 }
                             });
@@ -731,6 +734,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         intent.putExtra("DocumentID",model.getDocumentid());
                         intent.putExtra("Place",model.getPlace());
                         intent.putExtra("Description",model.getDescription());
+                        intent.putExtra("RenterID",model.getRenterid());
                         startActivity(intent);
                     }
                 });

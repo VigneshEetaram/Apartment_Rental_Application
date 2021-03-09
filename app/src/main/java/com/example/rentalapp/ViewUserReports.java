@@ -101,7 +101,7 @@ public class ViewUserReports extends AppCompatActivity {
 
 
                         DocumentReference documentReference2 = FirebaseFirestore.getInstance().collection("Adminchatroom").
-                                document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getTitle());
+                                document(model.getTitle());
                         documentReference2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -113,16 +113,16 @@ public class ViewUserReports extends AppCompatActivity {
                                     intent.putExtra("rentername",rentername);
                                     intent.putExtra("tenantname",tenantname);
                                     intent.putExtra("admnid",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    intent.putExtra("chatid",tenantname+model.getTitle());
+                                    intent.putExtra("chatid",model.getTitle());
                                     startActivity(intent);
                                 }
                                 else{
                                     DocumentReference documentReference3 = FirebaseFirestore.getInstance().collection("Adminchatroom").
-                                            document(FirebaseAuth.getInstance().getCurrentUser().getUid()+model.getTitle());
+                                            document(model.getTitle());
                                     Map<String, Object> userInfo = new HashMap<>();
                                     userInfo.put("tenantid",model.getUserid());
                                     userInfo.put("title",model.getTitle());
-                                    userInfo.put("chatid",tenantname+model.getTitle());
+                                    userInfo.put("chatid",model.getTitle());
                                     userInfo.put("renterid",model.getRenterid());
                                     userInfo.put("rentername",rentername);
                                     userInfo.put("tenantname",tenantname);
@@ -136,7 +136,7 @@ public class ViewUserReports extends AppCompatActivity {
                                     intent.putExtra("tenantname",tenantname);
 
                                     intent.putExtra("admnid",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                    intent.putExtra("chatid",tenantname+model.getTitle());
+                                    intent.putExtra("chatid",model.getTitle());
                                     startActivity(intent);
 
                                 }

@@ -28,6 +28,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 import java.util.List;
 
@@ -72,6 +75,59 @@ public class UserReportsChatsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(tenantid)){
+                    String message = edtmsg.getText().toString();
+
+                    if(!message.equals("")){
+                        ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
+                                FirebaseAuth.getInstance().getCurrentUser().getUid(),adminid,new Date().getTime(),"1","0",tenantname,"admin");
+
+
+
+                        db.collection("Adminchatroom").document(chatid).collection("chats")
+                                .add(chat)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        edtmsg.setText("");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("FAILED", "Error adding document", e);
+                                    }
+                                });}
+
+
+                }
+                else if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(adminid)){
+                    String message = edtmsg.getText().toString();
+
+                    if(!message.equals("")){ChatMessage chat = new ChatMessage(edtmsg.getText().toString(),
+                            adminid,tenantid,new Date().getTime(),"0","1",tenantname,"admin");
+
+
+
+                        db.collection("Adminchatroom").document(chatid).collection("chats")
+                                .add(chat)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d("SUCCESS", "DocumentSnapshot added with ID: " + documentReference.getId());
+                                        edtmsg.setText("");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("FAILED", "Error adding document", e);
+                                    }
+                                });
+                    }
+
+                }
 
 
             }
@@ -81,7 +137,7 @@ public class UserReportsChatsActivity extends AppCompatActivity {
 
     private void displayChatMessages() {
 
-        Query query = FirebaseFirestore.getInstance().collection("Chatroom").document(chatid)
+        Query query = FirebaseFirestore.getInstance().collection("Adminchatroom").document(chatid)
                 .collection("chats")
                 .orderBy("messageTime")
                 .limit(20);

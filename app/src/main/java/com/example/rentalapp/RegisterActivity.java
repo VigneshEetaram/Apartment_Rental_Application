@@ -150,6 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
+                    String token = getSharedPreferences("TOKEN",MODE_PRIVATE).getString("key","");
                     FirebaseUser user = fAuth.getCurrentUser();
                     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     Toast.makeText(RegisterActivity.this, "Register Successfull", Toast.LENGTH_SHORT).show();
@@ -164,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
                         userInfo.put("email", email);
                         userInfo.put("phonenumber", number);
                         userInfo.put("isuser", "2");
+                        userInfo.put("token", token);
                         DocumentReference documentReferences = fStore.collection("Tenant").document(user.getUid());
                         documentReferences.set(userInfo);
                     }
@@ -177,6 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
                         userInfo.put("email", email);
                         userInfo.put("phonenumber", number);
                         userInfo.put("isuser", "1");
+                        userInfo.put("token", token);
                         DocumentReference documentReferences = fStore.collection("Renter").document(user.getUid());
                         documentReferences.set(userInfo);
                     }

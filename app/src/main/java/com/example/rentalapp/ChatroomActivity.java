@@ -249,7 +249,7 @@ public class ChatroomActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String ,String> map = new HashMap<>();
-                map.put("authorization","key=AAAAr7pw2Rs:APA91bEkz861nGQa5ewarjz94ON_NxXnQ8vDkYIG7zZJs8aKt3y6kq15L3J5r07b2pjpF60eNtEG12VBSeNgqVSGLrB8LeZXwsX-XjWe_rLfabL3FFSL1l2bQ17fK0Zsx1yG-_3vJP82");
+                map.put("authorization","key=AAAAvxHvdOY:APA91bG_TOL-Z-zpqeYErf4mdTjdN1nolEhLGQKswLC6oTP_myz-YgaMUnv-83RG8lN8uNoMGGXs42O-r-_WgLdXqabu71wbyG2uyAAb278Kh8rBgj3phPXtp1L3ataTOYOSMdRq9O_v");
                 map.put("Content-Type","application/json");
                 return map;
             }

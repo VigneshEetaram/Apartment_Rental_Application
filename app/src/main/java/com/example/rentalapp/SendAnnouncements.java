@@ -53,7 +53,7 @@ public class SendAnnouncements extends AppCompatActivity {
                 doc.put("date",saveCurrentDate);
                 doc.put("description", descriptiond);
 
-                db.collection("Announcement").document("admin").set(doc)
+                db.collection("Announcement").document(id).set(doc)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {

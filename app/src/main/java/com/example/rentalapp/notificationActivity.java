@@ -42,6 +42,7 @@ public class notificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+        firebaseFirestore = FirebaseFirestore.getInstance();
         Intent intent = getIntent();
         String classid = intent.getExtras().getString("classid");
         recyclerView = findViewById(R.id.recyclerView_notification);

@@ -57,6 +57,7 @@ public class TenantApartmentDetails extends AppCompatActivity {
     String currentLanguage = Locale.getDefault().getLanguage();
     List<SlideModel> slideModels = new ArrayList<>();
     Toolbar toolbar;
+    String rentername,tenantname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,35 @@ public class TenantApartmentDetails extends AppCompatActivity {
         String place = intent.getExtras().getString("Place");
         String id = intent.getExtras().getString("DocumentID");
         String description = intent.getExtras().getString("Description");
+        String renterid = intent.getExtras().getString("RenterID");
+
+
+        DocumentReference documentReference4 = FirebaseFirestore.getInstance().collection("Renter").
+                document(renterid);
+        documentReference4.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                String firstname = documentSnapshot.getString("firstname");
+                String secondname = documentSnapshot.getString("secondname");
+                rentername = firstname+ " " +secondname;
+
+            }
+        });
+
+        DocumentReference documentReference5 = FirebaseFirestore.getInstance().collection("Tenant").
+                document(fAuth.getCurrentUser().getUid());
+        documentReference5.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                String firstname = documentSnapshot.getString("firstname");
+                String secondname = documentSnapshot.getString("secondname");
+                tenantname = firstname+ " " +secondname;
+
+            }
+        });
+
         Price.setText(price);
         Title.setText(title);
         Place.setText(place);
@@ -141,12 +171,13 @@ public class TenantApartmentDetails extends AppCompatActivity {
                             doc.put("title", FirebaseAuth.getInstance().getCurrentUser().getUid()+title);
                             doc.put("date",saveCurrentDate);
                             doc.put("userid",FirebaseAuth.getInstance().getCurrentUser().getUid());
-                            doc.put("tenantname","");
-                            doc.put("renterid","");
-                            doc.put("rentername","");
+                            doc.put("tenantname",tenantname);
+                            doc.put("renterid",renterid);
+                            doc.put("rentername",rentername);
                             doc.put("description", input1.getText().toString());
 
-                            db.collection("Userreports").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(doc)
+                            db.collection("Userreports").document(FirebaseAuth.getInstance().getCurrentUser().getUid()+title)
+                                    .set(doc)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
